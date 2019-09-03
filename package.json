@@ -1,8 +1,8 @@
 {
-  "name": "./",
+  "name": "cbt-ideas",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Ideas forum for CBT",
+  "author": "Space Racoons",
   "license": "MIT",
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.build.json",
