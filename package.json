@@ -16,7 +16,13 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "docker:cbt": "docker build -f ./docker/Dockerfile . -p \"3000:3000\"",
+    "docker:down": "docker-compose -f ./docker/docker-compose.yml down",
+    "docker:build": "docker-compose -f ./docker/docker-compose.yml build",
+    "docker:up": "docker-compose -f ./docker/docker-compose.yml up",
+    "docker:rebuild": "npm run docker:down && npm run docker:build && npm run docker:up",
+    "docker:restart": "npm run docker:down && npm run docker:up"
   },
   "dependencies": {
     "@nestjs/common": "^6.0.0",
