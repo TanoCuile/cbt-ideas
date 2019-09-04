@@ -11,4 +11,6 @@ WORKDIR /srv/app
 
 RUN npm i
 
-CMD npm start
+RUN npm i -g pm2 ts-node typescript
+
+CMD ["pm2-runtime", "start", "ecosystem.config.js"]

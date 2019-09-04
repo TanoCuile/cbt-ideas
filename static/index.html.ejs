@@ -5,5 +5,8 @@
   </head>
   <body>
     IDEAS
+    <% for (const scriptPath of scripts) { %>
+    <script src="<%= scriptPath %>"></script>
+    <% } %>
   </body>
 </html>
