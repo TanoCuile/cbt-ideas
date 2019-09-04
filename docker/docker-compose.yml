@@ -1,27 +1,31 @@
 version: '3'
 services:
-  db:
-    image: mongo:latest
-    environment:
-      - MONGO_DATA_DIR=/data/db
-      - MONGO_LOG_DIR=/dev/null
-    volumes:
-      - ./data/db:/data/db
+  database:
+    image: mongo:3.6
+    # environment:
+      # MONGO_DATA_DIR: /data/db
+      # MONGO_LOG_DIR: /dev/null
+    container_name: database
+    expose:
+      - 27017
+    # volumes:
+      # - ../../temp/ideas_mongo_data/db:/data/db
     ports:
         - 27017:27017
-    command: mongod --logpath=/dev/null # --quiet
 
   db_admin:
-    image: mrvautin/adminmongo
-    restart: "always"
+    build:
+      context: ../db_admin
     environment:
-      - CONN_NAME=whatever
-      - DB_HOST=mongodb
-      - DB_PORT=27017
+      CONN_NAME: whatever
+      DB_HOST: database
+      DB_PORT: 27017
+      # DB_USERNAME: root
+      # DB_PASSWORD: example
     ports:
-      - "1234:1234"
+      - "3007:8082"
     links:
-      - db
+      - database
 
   cbt_ideas:
     # restart: always
@@ -39,11 +43,11 @@ services:
     environment:
       NODE_ENV: develop
     links:
-      - db
+      - database
     ports:
      - "3006:3000"
 
 volumes:
-  db:
+  database:
   db_admin:
   cbt_ideas:
