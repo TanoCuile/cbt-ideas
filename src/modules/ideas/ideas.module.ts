@@ -7,6 +7,5 @@ import { IdeasController } from './controllers/ideas.controller';
   imports: [],
   controllers: [IdeasController],
   providers: [IdeasService],
-  exports:
 })
 export class IdeasModule {}
