@@ -8,8 +8,6 @@ export class WebController {
   constructor(@Inject(WebService) protected webService: WebService) {}
 
   @Get('/')
-  @Get('/ideas/*')
-  @Get('/question/*')
   async getIndex(): Promise<string> {
     return ejs.renderFile(
       resolve(this.webService.getAbsoluteStaticPath(), 'index.html.ejs'),
@@ -17,5 +15,25 @@ export class WebController {
         scripts: [this.webService.getAppScript()],
       },
     );
+  }
+
+  @Get('/ideas/*')
+  async getIdeas() {
+    return this.getIndex();
+  }
+
+  @Get('/ideas*')
+  async getIdea() {
+    return this.getIndex();
+  }
+
+  @Get('/question')
+  async getQuestion() {
+    return this.getIndex();
+  }
+
+  @Get('/question/*')
+  async getQuestions() {
+    return this.getIndex();
   }
 }
