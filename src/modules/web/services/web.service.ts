@@ -14,28 +14,32 @@ export class WebService {
     return join(sep, 'static');
   }
 
-  getAppScript(): any {
-    return readdirSync(join(this.getAbsoluteStaticPath(), 'js'))
-      .filter(file => file.match(this.appScriptRegex))
-      .reduce(
-        (last, current) => {
-          const [, version] = (this.appScriptRegex.exec(
-            current,
-          ) as unknown) as [string, string];
+  getAppScript(): string | undefined {
+    try {
+      return readdirSync(join(this.getAbsoluteStaticPath(), 'js'))
+        .filter(file => file.match(this.appScriptRegex))
+        .reduce(
+          (last, current) => {
+            const [, version] = (this.appScriptRegex.exec(
+              current,
+            ) as unknown) as [string, string];
 
-          if (Number(version) > last.version) {
-            return {
-              version: Number(version),
-              path: join(this.getWebStaticPath(), 'js', current),
-            };
-          }
+            if (Number(version) > last.version) {
+              return {
+                version: Number(version),
+                path: join(this.getWebStaticPath(), 'js', current),
+              };
+            }
 
-          return last;
-        },
-        { version: 0, path: '' } as {
-          version: number;
-          path: string;
-        },
-      ).path;
+            return last;
+          },
+          { version: 0, path: '' } as {
+            version: number;
+            path: string;
+          },
+        ).path;
+    } catch (err) {
+      return;
+    }
   }
 }
