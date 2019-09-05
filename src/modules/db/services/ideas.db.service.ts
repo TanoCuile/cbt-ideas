@@ -8,7 +8,7 @@ export class IdeasDBService implements IdeasDBServiceInterface {
     protected ideasRepository: Repository<Idea>,
   ) {}
 
-  create(idea: IdeaInterface): IdeaInterface {
+  create(idea: IdeaInterface): Promise<IdeaInterface> {
     return this.ideasRepository.create(idea);
   }
 
