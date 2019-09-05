@@ -18,8 +18,8 @@ const NavInner = styled.div`
 `;
 
 const NavItem = styled.div`
-  padding: 0 2rem;
-  font-size: 2rem;
+  padding: 0 20px;
+  font-size: 22px;
   letter-spacing: 0.3;
   a {
     color: #fff;
@@ -43,7 +43,7 @@ const Nav = () => {
           <Link to="/">Home</Link>
         </NavItem>
         <NavItem>
-          <Link to="/ideas">Ideas</Link>
+          <Link to="/ideas/create">Share Ideas</Link>
         </NavItem>
       </NavInner>
     </NavWrapper>

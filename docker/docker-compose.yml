@@ -37,6 +37,7 @@ services:
     volumes:
       - '../src:/srv/app/src'
       - '../resources:/srv/app/resources'
+      - '../ui:/srv/app/ui'
       - '../test:/srv/app/test'
       - '../static:/srv/app/static'
       - '../package.json:/srv/app/package.json'
