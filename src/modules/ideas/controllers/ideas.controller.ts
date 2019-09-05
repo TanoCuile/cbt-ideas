@@ -4,12 +4,15 @@ import {
   Get,
   Post,
   Param,
+  UseGuards,
 } from '@nestjs/common';
 
 import { IdeasService } from '../services/ideas.service';
 import { CreateIdeaRequest } from '../interfaces/createIdea.interface';
+import { AuthGuard } from '../../../guards/auth.guard';
 
 @Controller('api/ideas')
+@UseGuards(AuthGuard)
 export class IdeasController {
   constructor(private readonly ideasService: IdeasService) {}
 

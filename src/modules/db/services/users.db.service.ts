@@ -18,6 +18,12 @@ export class UsersDBService {
     return this.usersRepository.find();
   }
 
+  getByCriteria(
+    criteria: { [key in keyof User]?: any },
+  ): Promise<User[]> {
+    return this.usersRepository.find({ where: criteria });
+  }
+
   async findByIdAndUpdate(id: string, payload: Idea): Promise<User> {
     if (payload._id) {
       return this.usersRepository.save(payload);
