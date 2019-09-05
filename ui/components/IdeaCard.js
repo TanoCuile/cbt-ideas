@@ -5,8 +5,8 @@ const IdeaCardWrapper = styled.div`
   min-width: 600px;
   border: 1px solid ${({ theme }) => theme.blue};
   border-radius: 0.25rem;
-  padding: 1.25rem;
-  margin: 1.25rem;
+  padding: 10px;
+  margin: 10px;
 
   display: flex;
   justify-content: space-between;
@@ -15,7 +15,8 @@ const IdeaCardWrapper = styled.div`
 const IdeaCardTitle = styled.div`
   a {
     color: ${({ theme }) => theme.darkBlue};
-    font-size: 2rem;
+    font-size: 20px;
+    text-decoration: none;
 
     :hover {
       color: ${({ theme }) => theme.blue};
@@ -25,6 +26,7 @@ const IdeaCardTitle = styled.div`
 
 const IdeaCardInfo = styled.div`
   display: flex;
+  font-size: 14px;
 
   .posted-by {
     color: ${({ theme }) => theme.gray};
@@ -32,7 +34,7 @@ const IdeaCardInfo = styled.div`
 
   .comments {
     color: ${({ theme }) => theme.gray};
-    padding-left: 2.5rem;
+    padding-left: 15px;
   }
 `;
 
@@ -42,25 +44,24 @@ const IdeaCardReactions = styled.div`
   justify-content: center;
 
   .loading-spinner {
-    font-size: 2.5rem;
-    margin: 1rem;
+    font-size: 20px;
+    margin: 15px;
   }
 
   button {
-    margin: 0.5rem;
+    margin: 5px;
     background: none;
     box-shadow: none;
     border: none;
     cursor: pointer;
-    font-family: Roboto, sans-serif;
-    font-size: 1.5rem;
+    font-size: 12px;
     outline: none;
     display: flex;
     align-items: center;
 
     i {
-      font-size: 2.5rem;
-      padding-right: 0.5rem;
+      font-size: 20px;
+      padding-right: 10px;
     }
   }
 

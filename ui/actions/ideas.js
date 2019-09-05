@@ -43,8 +43,24 @@ const addDislikeToIdea = (id) => {
   };
 }
 
+const createIdea = (fields) => {
+  return dispatch => {
+    dispatch({
+      type: 'CREATE_IDEA_ATTEMPT',
+    });
+
+    return api.createIdea(fields).then(status => {
+      return dispatch({
+        type: 'CREATE_IDEA_SUCCESS',
+        content: fields
+      });
+    })
+  }
+}
+
 
 export default {
   addLikeToIdea,
   addDislikeToIdea,
+  createIdea,
 };
