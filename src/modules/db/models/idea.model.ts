@@ -1,16 +1,10 @@
-import { Entity, ObjectIdColumn, ObjectID, Column } from 'typeorm';
+import { Entity, Column } from 'typeorm';
 
+import { Base } from './base.model';
 import { IdeaInterface } from '../../ideas/interfaces/idea.interface';
 
 @Entity()
-export class Idea implements IdeaInterface {
-  @ObjectIdColumn()
-  _id: ObjectID;
-
-  get id(): string | undefined {
-    return this._id.toString();
-  }
-
+export class Idea extends Base implements IdeaInterface {
   @Column()
   title: string;
 
@@ -27,8 +21,8 @@ export class Idea implements IdeaInterface {
   owner: string;
 
   @Column()
-  userlikes: number;
-
+  users_who_liked: Array<string>;
+  
   @Column()
-  userDislikes: number;
+  users_who_disliked: Array<string>;
 }

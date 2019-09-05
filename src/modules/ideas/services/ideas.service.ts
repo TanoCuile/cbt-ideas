@@ -1,11 +1,13 @@
 import { Injectable, Inject } from '@nestjs/common';
+
 import { IdeaInterface } from '../interfaces/idea.interface';
 import { IdeasDBServiceInterface } from '../interfaces/ideas.db.service.interface';
+import { IdeasDBService } from 'src/modules/db/services/ideas.db.service';
 
 @Injectable()
 export class IdeasService {
   constructor(
-    @Inject('IdeasDBService') protected dbService: IdeasDBServiceInterface,
+    @Inject(IdeasDBService) protected dbService: IdeasDBServiceInterface,
   ) {}
 
   async create(item: IdeaInterface) {

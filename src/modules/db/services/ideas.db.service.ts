@@ -1,24 +1,26 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
 import { Idea } from '../models/idea.model';
 import { IdeasDBServiceInterface } from 'src/modules/ideas/interfaces/ideas.db.service.interface';
-import { IdeaInterface } from 'src/modules/ideas/interfaces/idea.interface';
 
+@Injectable()
 export class IdeasDBService implements IdeasDBServiceInterface {
   constructor(
-    protected ideasRepository: Repository<Idea>,
+    @InjectRepository(Idea) protected ideasRepository: Repository<Idea>,
   ) {}
 
-  async create(idea: IdeaInterface): Promise<IdeaInterface> {
-    return this.ideasRepository.create(idea);
+  async create(idea: Idea): Promise<Idea> {
+    return this.ideasRepository.save(idea);
   }
-  getAll(): Promise<IdeaInterface[]> {
+  getAll(): Promise<Idea[]> {
     return this.ideasRepository.find();
   }
-  likeIdea(id: string, userId: string): Promise<IdeaInterface> {
+  likeIdea(id: string, userId: string): Promise<Idea> {
     throw new Error('Method not implemented.');
   }
-  dislikeIdea(id: string, userId: string): Promise<IdeaInterface> {
+  dislikeIdea(id: string, userId: string): Promise<Idea> {
     throw new Error('Method not implemented.');
   }
 }

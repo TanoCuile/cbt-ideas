@@ -6,6 +6,7 @@ import {
   Param,
 } from '@nestjs/common';
 
+import { IdeaInterface } from '../interfaces/idea.interface';
 import { IdeasService } from '../services/ideas.service';
 
 @Controller('api/ideas')
@@ -13,7 +14,7 @@ export class IdeasController {
   constructor(private readonly ideasService: IdeasService) {}
 
   @Post()
-  create(@Body() post: any) {
+  create(@Body() post: IdeaInterface) {
     return this.ideasService.create(post);
   }
 

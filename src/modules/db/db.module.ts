@@ -1,20 +1,29 @@
 import { Module } from '@nestjs/common';
-import { mongoProvider } from './providers/mongo.provider';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { Idea } from './models/idea.model';
 import { IdeasDBService } from './services/ideas.db.service';
-import { ideasRepositoryProvider } from './providers/ideas.repository.provider';
 
 @Module({
-  imports: [],
-  controllers: [],
-  providers: [
-    mongoProvider,
-    ideasRepositoryProvider,
-    {
-      provide: 'IdeasDBService',
-      useClass: IdeasDBService,
-      inject: ['IDEAS_REPOSITORY'],
-    },
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'mongodb',
+      url: 'mongodb://database:27017/ideas',
+      useNewUrlParser: true,
+      entities: [
+        Idea
+      ],
+      // url: 'mongodb://root:example@db:27017'
+      // host: 'db',
+      // port: 27017,
+      // database: 'ideas',
+      // username: 'root',
+      // password: 'example',
+    }),
+    TypeOrmModule.forFeature([Idea])
   ],
-  exports: [IdeasDBService],
+  controllers: [],
+  providers: [IdeasDBService],
+  exports: [IdeasDBService, TypeOrmModule]
 })
 export class DbModule {}
