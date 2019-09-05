@@ -60,6 +60,7 @@
     "@types/node": "11.13.4",
     "@types/supertest": "2.0.7",
     "babel-loader": "^8.0.2",
+    "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^1.0.0",
     "file-loader": "^4.2.0",
     "jest": "24.7.1",

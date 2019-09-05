@@ -27,7 +27,7 @@ export class Idea implements IdeaInterface {
   owner: string;
 
   @Column()
-  userWhoLiked: string[];
+  usersWhoLiked: string[];
 
   @Column()
   usersWhoDisliked: string[];
