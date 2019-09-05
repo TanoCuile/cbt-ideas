@@ -12,7 +12,7 @@ export class WebController {
     return ejs.renderFile(
       resolve(this.webService.getAbsoluteStaticPath(), 'index.html.ejs'),
       {
-        scripts: [this.webService.getAppScript()],
+        scripts: [this.webService.getAppScript()].filter(i => !!i),
       },
     );
   }

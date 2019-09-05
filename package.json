@@ -35,6 +35,7 @@
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
     "styled-components": "^4.3.2",
+    "@nestjs/cqrs": "^6.0.1",
     "@nestjs/platform-express": "^6.6.7",
     "@nestjs/swagger": "^3.1.0",
     "ejs": "^2.7.1",
