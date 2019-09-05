@@ -1,18 +1,20 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import ideasActions from '../actions/ideas';
 
-export default class ShareIdeaForm extends Component {
+class ShareIdeaForm extends Component {
 
   state = {
-    title: "",
-    description: ""
+    title: this.props.title,
+    description: this.props.description
   }
 
   formSubmit = (e) => {
     e.preventDefault();
-
+    const { createIdea } = this.props;
+    this.setState({ title:"", description:"" });
+    createIdea(this.state);
   }
 
   onChange = (e) => {
@@ -21,36 +23,45 @@ export default class ShareIdeaForm extends Component {
   }
 
   render() {
+    const { loading } = this.props;
     return (
-      <Form onSubmit={e => this.formSubmit(e)}>
-        <Form.Group controlId="formBasicTitle">
-          <Form.Label>Title</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter title for your idea"
-            name="title"
-            value={this.state.title}
-            onChange={this.onChange}
-          />
-        </Form.Group>
+      <form onSubmit={e => this.formSubmit(e)}>
+        <fieldset disabled={loading}>
+          <div className="form-group">
+            <label>Title</label>
+            <input
+              className="form-control"
+              type="text"
+              placeholder="Enter title for your idea"
+              name="title"
+              value={this.state.title}
+              onChange={this.onChange}
+            />
+          </div>
 
-        <Form.Group controlId="formBasicDescription">
-          <Form.Label>Description</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows="3"
-            name="description"
-            value={this.state.description}
-            onChange={this.onChange}
-          />
-          <Form.Text className="text-muted">
-            Describe what you want to change
-          </Form.Text>
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
+          <div className="form-group">
+            <label>Description</label>
+            <textarea
+              className="form-control"
+              rows="3"
+              name="description"
+              value={this.state.description}
+              onChange={this.onChange}
+            />
+            <small className="form-text text-muted">
+              Describe what you want to change
+            </small>
+          </div>
+          <button className="btn btn-primary" type="submit">
+            {loading ? 'Sending...' : 'Submit'}
+          </button>
+        </fieldset>
+      </form>
     );
   }
 }
+
+export default connect(
+  state => state.ideasCreate,
+  ideasActions
+)(ShareIdeaForm);
