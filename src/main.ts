@@ -3,6 +3,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { resolve } from 'path';
+import { FixturesProvider } from './modules/db/providers/fixtures.provider';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -21,6 +22,16 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
+
+  const fixturesProvider = app.get<FixturesProvider>('FIXTURES_PROVIDER');
+
+  if (await fixturesProvider.shouldImportFixtures()) {
+    if (await fixturesProvider.import()) {
+      console.log('Fixtures loaded');
+    } else {
+      console.error('Fixtures not loaded');
+    }
+  }
 
   await app.listen(3000);
 }

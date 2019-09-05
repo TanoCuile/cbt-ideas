@@ -36,7 +36,7 @@ services:
         NODE_ENV: develop
     volumes:
       - '../src:/srv/app/src'
-      - '../ui:/srv/app/ui'
+      - '../resources:/srv/app/resources'
       - '../test:/srv/app/test'
       - '../static:/srv/app/static'
       - '../package.json:/srv/app/package.json'

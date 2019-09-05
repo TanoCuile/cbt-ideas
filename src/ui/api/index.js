@@ -24,8 +24,7 @@ const dislikeIdea = id => {
   });
 };
 
-class Api {
-
+const getIdeas = () => {
 }
 
 export default {
