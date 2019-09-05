@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-  entry: './src/ui/index.js',
+  entry: './ui/index.js',
   mode: 'development',
   module: {
     rules: [
@@ -31,5 +31,5 @@ module.exports = {
   //   port: 3030,
   //   publicPath: 'http://localhost:3030/public/assets/',
   // },
-  plugins: [],
+  plugins: [new CleanWebpackPlugin()],
 };

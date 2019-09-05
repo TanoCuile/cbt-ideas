@@ -10,7 +10,7 @@ import Themes from './Themes';
 
 import Nav from './components/Nav';
 
-import IdeasPage from './pages/IdeasPage';
+import ShareIdeaPage from './pages/ShareIdeaPage';
 import HomePage from './pages/HomePage';
 
 export default class App extends Component {
@@ -24,7 +24,7 @@ export default class App extends Component {
             <>
               <Nav />
               <Route exact path="/" component={HomePage} />
-              <Route path="/ideas" component={IdeasPage} />
+              <Route path="/ideas/create" component={ShareIdeaPage} />
             </>
           </Themes>
         </Router>
