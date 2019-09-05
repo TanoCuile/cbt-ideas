@@ -1,7 +1,8 @@
 import { IdeaInterface } from './idea.interface';
 
 export interface IdeasDBServiceInterface {
-  create(idea: IdeaInterface): Promise<IdeaInterface>;
+  findByIdAndUpdate(ideaId: string, idea: IdeaInterface);
+  findById(ideaId: string): IdeaInterface | PromiseLike<IdeaInterface>;
+  create(idea: IdeaInterface): IdeaInterface;
   find(): Promise<IdeaInterface[]>;
-  save(idea: IdeaInterface): Promise<IdeaInterface>;
 }

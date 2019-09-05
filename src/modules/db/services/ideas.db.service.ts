@@ -11,10 +11,16 @@ export class IdeasDBService implements IdeasDBServiceInterface {
   create(idea: IdeaInterface): Promise<IdeaInterface> {
     return this.ideasRepository.create(idea);
   }
+
   find(): Promise<IdeaInterface[]> {
     return this.ideasRepository.find();
   }
+
   findByIdAndUpdate(id: string, payload: IdeaInterface): Promise<IdeaInterface> {
-    throw new Error('Not implemented.')
+    throw new Error('Not implemented.');
+  }
+
+  findById(id: string): IdeaInterface {
+    throw new Error('Not implemented.');
   }
 }
