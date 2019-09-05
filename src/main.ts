@@ -16,6 +16,7 @@ async function bootstrap() {
     .setDescription('CBT|TMP ideas forum')
     .setVersion('1.0')
     .addTag('idea')
+    .addTag('idea_mock')
     .build();
 
   const document = SwaggerModule.createDocument(app, options);
