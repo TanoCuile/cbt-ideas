@@ -8,8 +8,8 @@ export class IdeasDBService implements IdeasDBServiceInterface {
     protected ideasRepository: Repository<Idea>,
   ) {}
 
-  create(idea: IdeaInterface): IdeaInterface {
-    return this.ideasRepository.create(idea);
+  create(idea: IdeaInterface): Promise<IdeaInterface> {
+    return this.ideasRepository.save(this.ideasRepository.create(idea));
   }
 
   find(): Promise<IdeaInterface[]> {
