@@ -9,7 +9,7 @@ export class IdeasDBService implements IdeasDBServiceInterface {
   ) {}
 
   create(idea: IdeaInterface): Promise<IdeaInterface> {
-    return this.ideasRepository.create(idea);
+    return this.ideasRepository.save(this.ideasRepository.create(idea));
   }
 
   find(): Promise<IdeaInterface[]> {
