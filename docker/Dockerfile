@@ -13,4 +13,6 @@ RUN npm i
 
 RUN npm i -g pm2 ts-node typescript
 
+RUN npm run dev:build &
+
 CMD ["pm2-runtime", "start", "ecosystem.config.js"]
