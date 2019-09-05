@@ -9,17 +9,17 @@ import {
 import { CommentsService } from '../services/comments.service';
 import { Comment } from '../interfaces/comment.interface';
 
-@Controller('comments')
+@Controller('api/comments')
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
-  @Post('/:post/comments')
-  create(@Param() post: string, @Body() comment: Comment) {
-    return this.commentsService.create(post, comment);
+  @Post('/:post_id/comments')
+  create(@Param() post_id: string, @Body() comment: Comment) {
+    return this.commentsService.create(post_id, comment);
   }
 
-  @Get('/:post')
-  getByPost(@Param() post: string) {
-    return this.commentsService.getByPost(post);
+  @Get('/:post_id')
+  getByPost(@Param() post_id: string) {
+    return this.commentsService.getByPost(post_id);
   }
 }

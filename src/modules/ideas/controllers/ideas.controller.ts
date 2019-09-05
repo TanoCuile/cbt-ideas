@@ -8,7 +8,7 @@ import {
 
 import { IdeasService } from '../services/ideas.service';
 
-@Controller('ideas')
+@Controller('api/ideas')
 export class IdeasController {
   constructor(private readonly ideasService: IdeasService) {}
 
