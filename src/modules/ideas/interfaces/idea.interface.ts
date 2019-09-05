@@ -1,4 +1,4 @@
-export interface Idea {
+export interface IdeaInterface {
   readonly id?: string;
   readonly title: string;
   readonly description: string;

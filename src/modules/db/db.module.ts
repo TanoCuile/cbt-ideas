@@ -6,7 +6,15 @@ import { ideasRepositoryProvider } from './providers/ideas.repository.provider';
 @Module({
   imports: [],
   controllers: [],
-  providers: [mongoProvider, ideasRepositoryProvider, IdeasDBService],
+  providers: [
+    mongoProvider,
+    ideasRepositoryProvider,
+    {
+      provide: 'IdeasDBService',
+      useClass: IdeasDBService,
+      inject: ['IDEAS_REPOSITORY'],
+    },
+  ],
   exports: [IdeasDBService],
 })
 export class DbModule {}
