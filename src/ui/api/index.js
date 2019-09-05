@@ -24,6 +24,10 @@ const dislikeIdea = id => {
   });
 };
 
+class Api {
+
+}
+
 export default {
   likeIdea,
   dislikeIdea,
