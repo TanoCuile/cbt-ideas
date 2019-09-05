@@ -1,29 +1,33 @@
 import { Repository } from 'typeorm';
 import { Idea } from '../models/idea.model';
-import { IdeasDBServiceInterface } from 'src/modules/ideas/interfaces/ideas.db.service.interface';
-import { IdeaInterface } from 'src/modules/ideas/interfaces/idea.interface';
+import { Injectable, Inject } from '@nestjs/common';
+import { Comment } from '../models/comment.model';
 
-export class IdeasDBService implements IdeasDBServiceInterface {
-  constructor(protected ideasRepository: Repository<Idea>) {}
+@Injectable()
+export class UsersDBService {
+  constructor(
+    @Inject('Comments_REPOSITORY')
+    protected commentsRepository: Repository<Comment>,
+  ) {}
 
-  create(idea: IdeaInterface): Promise<IdeaInterface> {
-    return this.ideasRepository.save(this.ideasRepository.create(idea));
+  create(idea: Comment): Promise<Comment> {
+    return this.commentsRepository.save(this.commentsRepository.create(idea));
   }
 
-  find(): Promise<IdeaInterface[]> {
-    return this.ideasRepository.find();
+  find(): Promise<Comment[]> {
+    return this.commentsRepository.find();
   }
 
-  async findByIdAndUpdate(id: string, payload: Idea): Promise<IdeaInterface> {
+  async findByIdAndUpdate(id: string, payload: Idea): Promise<Comment> {
     if (payload._id) {
-      return this.ideasRepository.save(payload);
+      return this.commentsRepository.save(payload);
     }
 
     const idea = await this.findById(id);
-    return this.ideasRepository.save(Object.assign({}, idea, payload));
+    return this.commentsRepository.save(Object.assign({}, idea, payload));
   }
 
-  async findById(id: string): Promise<IdeaInterface> {
-    return (await this.ideasRepository.findByIds([id]))[0];
+  async findById(id: string): Promise<Comment> {
+    return (await this.commentsRepository.findByIds([id]))[0];
   }
 }

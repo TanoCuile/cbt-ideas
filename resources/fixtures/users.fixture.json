@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "name": "Ivan",
+    "token": "---",
+    "email": "i@van.com",
+    "role": "ARRANGER",
+    "company": "Main"
+  },
+  {
+    "id": "2",
+    "name": "Tvan",
+    "token": "----",
+    "email": "t@van.com",
+    "role": "ARRANGER",
+    "company": "Main"
+  },
+  {
+    "id": "3",
+    "name": "Tvan",
+    "token": "-----",
+    "email": "t@van.com",
+    "role": "ARRANGER",
+    "company": "Main"
+  }
+]

@@ -1,10 +1,12 @@
 import { Repository } from 'typeorm';
 import { Idea } from '../models/idea.model';
-import { IdeasDBServiceInterface } from 'src/modules/ideas/interfaces/ideas.db.service.interface';
-import { IdeaInterface } from 'src/modules/ideas/interfaces/idea.interface';
+import { IdeasDBServiceInterface } from '../../ideas/interfaces/ideas.db.service.interface';
+import { IdeaInterface } from '../../ideas/interfaces/idea.interface';
+import { Injectable, Inject } from '@nestjs/common';
 
+@Injectable()
 export class IdeasDBService implements IdeasDBServiceInterface {
-  constructor(protected ideasRepository: Repository<Idea>) {}
+  constructor(@Inject('IDEAS_REPOSITORY') protected ideasRepository: Repository<Idea>) {}
 
   create(idea: IdeaInterface): Promise<IdeaInterface> {
     return this.ideasRepository.save(this.ideasRepository.create(idea));

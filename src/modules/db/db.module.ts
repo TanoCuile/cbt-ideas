@@ -18,14 +18,12 @@ import { usersRepositoryProvider } from './providers/users.repository.provider';
     {
       provide: 'FIXTURES_PROVIDER',
       useClass: FixturesProvider,
-      inject: ['IDEAS_REPOSITORY', 'COMMENTS_REPOSITORY', 'USER_REPOSITORY'],
-    } as ClassProvider,
+    } as ClassProvider<FixturesProvider>,
     {
       provide: 'IdeasDBService',
       useClass: IdeasDBService,
-      inject: ['IDEAS_REPOSITORY'],
-    } as ClassProvider,
+    } as ClassProvider<IdeasDBService>,
   ],
-  exports: [IdeasDBService, 'FIXTURES_PROVIDER'],
+  exports: ['IdeasDBService', 'FIXTURES_PROVIDER'],
 })
 export class DbModule {}
