@@ -6,8 +6,8 @@ import { resolve } from 'path';
 export class WebController {
   constructor() {}
 
-  @Get()
-  getHello(): string {
+  @Get('/*')
+  getIndexPage(): string {
     return readFileSync(
       resolve(process.cwd(), 'static', 'index.html'),
     ).toString();
