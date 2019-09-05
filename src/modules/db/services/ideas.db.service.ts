@@ -1,4 +1,3 @@
-import { Injectable, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Idea } from '../models/idea.model';
 import { IdeasDBServiceInterface } from 'src/modules/ideas/interfaces/ideas.db.service.interface';
@@ -9,16 +8,13 @@ export class IdeasDBService implements IdeasDBServiceInterface {
     protected ideasRepository: Repository<Idea>,
   ) {}
 
-  async create(idea: IdeaInterface): Promise<IdeaInterface> {
+  create(idea: IdeaInterface): Promise<IdeaInterface> {
     return this.ideasRepository.create(idea);
   }
-  getAll(): Promise<IdeaInterface[]> {
+  find(): Promise<IdeaInterface[]> {
     return this.ideasRepository.find();
   }
-  likeIdea(id: string, userId: string): Promise<IdeaInterface> {
-    throw new Error('Method not implemented.');
-  }
-  dislikeIdea(id: string, userId: string): Promise<IdeaInterface> {
-    throw new Error('Method not implemented.');
+  findByIdAndUpdate(id: string, payload: IdeaInterface): Promise<IdeaInterface> {
+    throw new Error('Not implemented.')
   }
 }
