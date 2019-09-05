@@ -1,5 +1,5 @@
 export interface Idea {
-  readonly id: string;
+  readonly id?: string;
   readonly title: string;
   readonly description: string;
   readonly likes: number;

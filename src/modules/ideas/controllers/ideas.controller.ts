@@ -29,6 +29,6 @@ export class IdeasController {
 
   @Post('/:id/dislike')
   dislike(@Param() id: string) {
-    return this.ideasService.like(id);
+    return this.ideasService.dislike(id);
   }
 }

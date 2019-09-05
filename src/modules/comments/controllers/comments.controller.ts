@@ -13,13 +13,13 @@ import { Comment } from '../interfaces/comment.interface';
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
-  @Post('/:post_id/comments')
-  create(@Param() post_id: string, @Body() comment: Comment) {
-    return this.commentsService.create(post_id, comment);
+  @Post('/:idea_id/comments')
+  create(@Param() idea_id: string, @Body() comment: Comment) {
+    return this.commentsService.create(idea_id, comment);
   }
 
-  @Get('/:post_id')
-  getByPost(@Param() post_id: string) {
-    return this.commentsService.getByPost(post_id);
+  @Get('/:idea_id')
+  getByPost(@Param() idea_id: string) {
+    return this.commentsService.getByPost(idea_id);
   }
 }
