@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { IdeasController } from './controllers/ideas.controller';
 import { IdeasService } from './services/ideas.service';
-import { DbModule } from '../db/db.module';
+import { Idea } from '../db/models/idea.model';
 
 @Module({
-  imports: [DbModule],
+  imports: [TypeOrmModule.forFeature([Idea])],
   controllers: [IdeasController],
   providers: [IdeasService],
 })

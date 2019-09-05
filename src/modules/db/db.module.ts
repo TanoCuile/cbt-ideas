@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { Idea } from './models/idea.model';
-import { IdeasDBService } from './services/ideas.db.service';
 
 @Module({
   imports: [
@@ -19,11 +18,10 @@ import { IdeasDBService } from './services/ideas.db.service';
       // database: 'ideas',
       // username: 'root',
       // password: 'example',
-    }),
-    TypeOrmModule.forFeature([Idea])
+    })
   ],
   controllers: [],
-  providers: [IdeasDBService],
-  exports: [IdeasDBService, TypeOrmModule]
+  providers: [],
+  exports: []
 })
 export class DbModule {}
