@@ -1,25 +1,26 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { Idea } from '../interfaces/idea.interface';
-import { IdeasDBService } from 'src/modules/db/services/ideas.db.service';
+import { IdeaInterface } from '../interfaces/idea.interface';
 import { IdeasDBServiceInterface } from '../interfaces/ideas.db.service.interface';
 
 @Injectable()
 export class IdeasService {
-  constructor(@Inject(IdeasDBService) protected dbService: IdeasDBServiceInterface) {}
+  constructor(
+    @Inject('IdeasDBService') protected dbService: IdeasDBServiceInterface,
+  ) {}
 
-  create(item: Idea) {
+  async create(item: IdeaInterface) {
     return this.dbService.create(item);
   }
 
-  getAll(): Idea[] {
+  async getAll(): Promise<IdeaInterface[]> {
     return this.dbService.getAll();
   }
 
-  like(idea_id: string) {
-    return this.dbService.likeIdea(idea_id);
+  async like(ideaId: string) {
+    return this.dbService.likeIdea(ideaId, undefined);
   }
 
-  dislike(idea_id: string) {
-    return this.dbService.dislikeIdea(idea_id);
+  async dislike(ideaId: string) {
+    return await this.dbService.dislikeIdea(ideaId, undefined);
   }
 }
