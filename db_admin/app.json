@@ -1,0 +1,8 @@
+{
+  "app": {
+    "host": "0.0.0.0",
+    "port": 8082,
+    "password": "1",
+    "locale": "en"
+  }
+}

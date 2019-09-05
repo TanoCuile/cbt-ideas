@@ -1,8 +1,25 @@
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { resolve } from 'path';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.useStaticAssets(resolve(process.cwd(), 'static'), {
+    extensions: ['js', 'css'],
+    prefix: '/static',
+  });
+
+  const options = new DocumentBuilder()
+    .setTitle('CBT|TMP ideas')
+    .setDescription('CBT|TMP ideas forum')
+    .setVersion('1.0')
+    .addTag('idea')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('api', app, document);
 
   await app.listen(3000);
 }
