@@ -1,14 +1,14 @@
 import Axios from 'axios';
 
-const likeIdea = (id) => {
+const likeIdea = id => {
   if (!id) return null;
 
   return Axios({
     data: {},
     method: 'POST',
-    url: `/api/ideas/${id}/like`
+    url: `/api/ideas/${id}/like`,
   });
-}
+};
 
 const dislikeIdea = id => {
   if (!id) return null;
@@ -16,7 +16,7 @@ const dislikeIdea = id => {
   return Axios({
     data: {},
     method: 'POST',
-    url: `/api/ideas/${id}/dislike`
+    url: `/api/ideas/${id}/dislike`,
   });
 };
 
@@ -26,10 +26,9 @@ const createIdea = fields => {
   return Axios({
     data: fields,
     method: 'POST',
-    url: `/api/ideas`
+    url: `/api/ideas`,
   });
 };
-
 
 const getAllIdeas = fields => {
   if (!fields) return null;
@@ -37,7 +36,26 @@ const getAllIdeas = fields => {
   return Axios({
     data: fields,
     method: 'GET',
-    url: `/api/ideas`
+    url: `/api/ideas`,
+  });
+};
+
+const getIdeaComments = ideaId => {
+  if (!ideaId) return null;
+
+  return Axios({
+    method: 'GET',
+    url: `/api/comments/${ideaId}`,
+  });
+};
+
+const saveComment = ({ ideaId, commentData }) => {
+  if (!ideaId || !commentData) return null;
+
+  return Axios({
+    method: 'POST',
+    data: commentData,
+    url: `/api/comments/${ideaId}`,
   });
 };
 
@@ -46,4 +64,6 @@ export default {
   dislikeIdea,
   createIdea,
   getAllIdeas,
+  getIdeaComments,
+  saveComment,
 };

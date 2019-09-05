@@ -1,9 +1,10 @@
 import { Entity, ObjectIdColumn, ObjectID, Column } from 'typeorm';
+import { CommentInterface } from '../../comments/interfaces/comment.interface';
 
 @Entity({
   name: 'comments',
 })
-export class Comment {
+export class Comment implements CommentInterface {
   @ObjectIdColumn()
   _id: ObjectID;
 

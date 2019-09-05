@@ -1,17 +1,21 @@
-import { Injectable } from '@nestjs/common';
-import { Comment } from '../interfaces/comment.interface';
+import { Injectable, Inject } from '@nestjs/common';
+import { CommentInterface } from '../interfaces/comment.interface';
+import { CommentDBServiceInterface } from '../interfaces/comment.db.service.interface';
+import { strict } from 'assert';
 
 @Injectable()
 export class CommentsService {
-  private readonly comments: Comment[] = [];
+  constructor(
+    @Inject('CommentsDBService')
+    protected commentsDbService: CommentDBServiceInterface,
+  ) {}
 
-  create(postId: string, comment: Comment) {
-    this.comments.push(comment);
-
-    return comment;
+  async create(ideaId: string, comment: CommentInterface) {
+    comment.ideaId = ideaId;
+    this.commentsDbService.saveComment(comment);
   }
 
-  getByPost(postId: string): Comment[] {
-    return [];
+  getByIdea(ideaId: string): Promise<CommentInterface[]> {
+    return this.commentsDbService.getByCriteria({ ideaId });
   }
 }

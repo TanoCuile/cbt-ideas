@@ -1,12 +1,10 @@
-import { ClassProvider } from '@nestjs/common/interfaces';
 import { Repository } from 'typeorm';
-import { Idea } from '../models/idea.model';
+import { Idea } from '../../db/models/idea.model';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import { User } from '../models/user.model';
-import { IdeaInterface } from 'src/modules/ideas/interfaces/idea.interface';
+import { User } from '../../db/models/user.model';
 import { Injectable, Inject } from '@nestjs/common';
-import { Comment } from '../models/comment.model';
+import { Comment } from '../../db/models/comment.model';
 
 @Injectable()
 export class FixturesProvider {

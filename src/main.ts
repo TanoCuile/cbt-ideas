@@ -3,7 +3,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { resolve } from 'path';
-import { FixturesProvider } from './modules/db/providers/fixtures.provider';
+import { FixturesProvider } from './modules/fixtures/providers/fixtures.provider';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
