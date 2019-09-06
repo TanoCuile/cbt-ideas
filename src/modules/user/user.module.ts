@@ -6,6 +6,6 @@ import { DbModule } from '../db/db.module';
   imports: [DbModule],
   controllers: [],
   providers: [UserAuthService],
-  exports: []
+  exports: [UserAuthService],
 })
 export class UserModule {}

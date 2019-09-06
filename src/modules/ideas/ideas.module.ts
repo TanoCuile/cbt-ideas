@@ -7,9 +7,10 @@ import { IdeasDBService } from '../db/services/ideas.db.service';
 import { UserAuthService } from '../user/services/user.auth.service';
 import { IdeasSubscriber } from './services/subscriber.service';
 import { NotificationModule } from '../notifications/notification.module';
+import { UserModule } from '../user/user.module';
 
 @Module({
-  imports: [DbModule, NotificationModule],
+  imports: [DbModule, UserModule, NotificationModule],
   controllers: [IdeasController],
   providers: [IdeasService, IdeasDBService, UserAuthService, IdeasSubscriber],
 })

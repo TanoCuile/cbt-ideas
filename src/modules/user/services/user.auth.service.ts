@@ -1,5 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
+import { Request } from 'express';
 import { UserDBServiceInterface } from '../interfaces/user.db.service.interface';
+import { UserInterface } from '../interfaces/user.interface';
 
 @Injectable()
 export class UserAuthService {
@@ -8,11 +10,24 @@ export class UserAuthService {
     protected userDbService: UserDBServiceInterface,
   ) {}
 
+  async getUserFromRequest(
+    request: Request,
+  ): Promise<UserInterface | undefined> {
+    const token = request.cookies.ct_tok;
+    if (!token) {
+      return;
+    }
+
+    return this.getUserByToken(token);
+  }
+
   async isValidWith(userToken: string): Promise<boolean> {
-    return !!(await this.getUserByToken(userToken));
+    const user = await this.getUserByToken(userToken);
+    return !!user;
   }
 
   private async getUserByToken(userToken: string) {
-    return await this.userDbService.getByCriteria({ token: userToken })[0];
+    const users = await this.userDbService.getByCriteria({ token: userToken });
+    return users[0];
   }
 }
