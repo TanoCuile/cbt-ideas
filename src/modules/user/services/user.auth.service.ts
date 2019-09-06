@@ -13,6 +13,6 @@ export class UserAuthService {
   }
 
   private async getUserByToken(userToken: string) {
-    return await this.userDbService.getByCriteria({ token: userToken });
+    return await this.userDbService.getByCriteria({ token: userToken })[0];
   }
 }
