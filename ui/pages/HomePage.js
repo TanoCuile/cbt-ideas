@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import styled from 'styled-components';
 
 import { connect } from 'react-redux';
@@ -16,36 +16,49 @@ const IdeasInner = styled.div`
   width: ${({ theme }) => theme.maxWidth};
 `;
 
-const HomePage = props => {
-  const { ideasList } = props;
-  return (
-    <>
-      {/* <Banner/> */}
-      <IdeasWrapper>
-        <IdeasInner>
-          {ideasList.map(idea => (
-            <IdeaCard
-              key={idea.id}
-              id={idea.id}
-              title={idea.title}
-              userName={idea.userName}
-              commentsCount={idea.commentsCount}
-              likes={idea.likes}
-              dislikes={idea.dislikes}
-              loading={idea.loading}
-              {...props}
-            />
-          ))}
-        </IdeasInner>
-      </IdeasWrapper>
-    </>
-  );
+const IdeasLoadingSpinner = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+class HomePage extends Component {
+
+  componentDidMount() {
+    this.props.getIdeas();
+  }
+
+  render() {
+    const { ideasList, loading } = this.props;
+
+    if (loading)
+      return (
+        <IdeasLoadingSpinner>
+          <i className="fas fa-spinner fa-pulse" />
+        </IdeasLoadingSpinner>
+      );
+
+    if (!ideasList.length) return <h1>There is no ideas for now.</h1>
+    console.log('ideasList', ideasList);
+    return (
+      <>
+        {/* <Banner/> */}
+        <IdeasWrapper>
+          <IdeasInner>
+            {ideasList.map(idea => (
+              <IdeaCard key={idea.id} {...idea} {...this.props} />
+            ))}
+          </IdeasInner>
+        </IdeasWrapper>
+      </>
+    );
+  }
 };
 
-
 export default connect(
-  state => {
-    return { ideasList: state.ideas };
+  ({ ideas }) => {
+    return { ideasList: ideas.list, loading: ideas.loading };
   },
   ideasActions,
 )(HomePage);

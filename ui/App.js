@@ -12,6 +12,7 @@ import Nav from './components/Nav';
 
 import ShareIdeaPage from './pages/ShareIdeaPage';
 import HomePage from './pages/HomePage';
+import IdeaDetailsPage from './pages/IdeaDetailsPage';
 
 export default class App extends Component {
   render() {
@@ -24,7 +25,8 @@ export default class App extends Component {
             <>
               <Nav />
               <Route exact path="/" component={HomePage} />
-              <Route path="/ideas/create" component={ShareIdeaPage} />
+              <Route exact path="/ideas/create" component={ShareIdeaPage} />
+              <Route path="/idea/:id" component={IdeaDetailsPage} />
             </>
           </Themes>
         </Router>
