@@ -15,13 +15,13 @@ class IdeaDetailsPage extends Component {
   }
 
   render() {
-    const { idea, loading } = this.props;
+    const { list, loading, match: { params } } = this.props;
 
     if (loading) return <i className="fas fa-spinner fa-pulse" />;
+    const idea = list.find(idea => idea.id === params.id)
 
     if (!idea) {
-      window.location.href = '/404';
-      return (<></>);
+      return (<h1>Id With id {params.id} not found!</h1>);
     }
 
     const { id, title, userName, description, reactions } = idea;
@@ -110,10 +110,10 @@ const IdeaDetailsReactions = styled.div`
 `;
 
 export default connect(
-  ({ ideas: {list} }, { match: { params } }) => {
-    if (!list.length) return { idea: undefined };
+  ({ ideas: { list, loading } }) => {
     return {
-      idea: list.find(idea => idea.id === params.id),
+      list,
+      loading,
     };
   },
   ideasActions

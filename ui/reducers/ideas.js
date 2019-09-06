@@ -47,7 +47,6 @@ const ideasReducer = (state = initialState, action) => {
 
     case 'ADD_LIKE_TO_IDEA_SUCCESS':
       index = list.findIndex(item => item.id === content.id);
-      console.log('list[index]', list[index]);
       return {
         ...state,
         list: [
