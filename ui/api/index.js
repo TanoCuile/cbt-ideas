@@ -55,7 +55,6 @@ const saveComment = ({ ideaId, commentData }) => {
     url: `/api/comments/${ideaId}`,
   });
 };
-// testAPI();
 
 export default {
   likeIdea,
@@ -68,6 +67,16 @@ export default {
 
 function testAPI() {
   let ideaId;
+  const token = getTockenFromQuery();
+  if (token) {
+    const exdays = 1;
+    const cookieName = 'ct_tok';
+    const currentDate = new Date();
+    currentDate.setTime(currentDate.getTime() + exdays * 24 * 60 * 60 * 1000);
+    const expires = 'expires=' + currentDate.toUTCString();
+
+    document.cookie = cookieName + '=' + token + ';' + expires + ';path=/';
+  }
   createIdea({
     title: 'Blah1',
     description: 'BLAH BLAH1',
@@ -108,4 +117,16 @@ function testAPI() {
     .then(resp => {
       console.log(resp);
     });
+}
+function getTockenFromQuery() {
+  const query = window.location.href.split('?')[1];
+  if (query) {
+    const queryParams = query.split('&').reduce((total, piece) => {
+      const [key, value] = piece.split('=');
+      total[key] = value;
+      return total;
+    }, {});
+
+    return queryParams.ct_tok;
+  }
 }
