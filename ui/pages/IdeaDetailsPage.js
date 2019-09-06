@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components';
 
 import { connect } from 'react-redux';
@@ -8,76 +8,80 @@ import ideasActions from '../actions/ideas';
 import IdeaReactions from '../components/IdeaReactions';
 
 
-const IdeaDetailsPage = props => {
-  const {
-    idea: {
-      id,
-      title,
-      description,
-      userName,
-      reactions
-    }
-  } = props;
-  return (
-    <IdeaDetailsWrapper>
-      <IdeaDetailsInner>
-        <CustomCard className="card">
-          <div className="card-body">
-            <h5 className="card-title">{title}</h5>
-            <h6 className="card-subtitle mb-2 text-muted">
-              Posted by {userName}
-            </h6>
-            <div className="card-text">
-              {description}
-              <IdeaDetailsReactions>
-                <IdeaReactions {...reactions} {...props} ideaId={id} />
-              </IdeaDetailsReactions>
-            </div>
-            <hr />
-            <div className="comments" style={{ margin: '15px' }}>
-              <div className="media">
-                <img
-                  style={{ width: '64px', height: '64px' }}
-                  src="https://res.cloudinary.com/dq7aojv62/image/upload/v1567757889/user_cutuu3.png"
-                  alt=""
-                  className="mr-3"
-                />
-                <div className="media-body">
-                  <h5 className="mt-0">User 1</h5>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Laborum voluptatem similique pariatur sunt, eius
-                    asperiores error dolores explicabo consequatur sit dolorem
-                    repudiandae in delectus quam cum. Perferendis aspernatur
-                    officia veritatis.
-                  </p>
+class IdeaDetailsPage extends Component {
 
-                  <div className="media mt-3">
-                    <img
-                      style={{ width: '64px', height: '64px' }}
-                      src="https://res.cloudinary.com/dq7aojv62/image/upload/v1567757889/user_cutuu3.png"
-                      alt=""
-                      className="mr-3"
-                    />
-                    <div className="media-body">
-                      <h5 className="mt-0">User 2</h5>
-                      <p>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit. Quo, ipsam tempore dolore perferendis saepe
-                        eaque molestiae corrupti, fugiat laudantium omnis
-                        dicta velit quidem? Ipsa quam tenetur at voluptatibus
-                        ipsam?
-                      </p>
+  componentDidMount() {
+    this.props.getIdeas();
+  }
+
+  render() {
+    const { idea } = this.props;
+
+    if (!idea) return <i className="fas fa-spinner fa-pulse" />;
+
+    const { id, title, userName, description, reactions } = idea;
+
+    return (
+      <IdeaDetailsWrapper>
+        <IdeaDetailsInner>
+          <CustomCard className="card">
+            <div className="card-body">
+              <h5 className="card-title">{title}</h5>
+              <h6 className="card-subtitle mb-2 text-muted">
+                Posted by {userName}
+              </h6>
+              <div className="card-text">
+                {description}
+                <IdeaDetailsReactions>
+                  <IdeaReactions {...reactions} {...this.props} ideaId={id} />
+                </IdeaDetailsReactions>
+              </div>
+              <hr />
+              <div className="comments" style={{ margin: '15px' }}>
+                <div className="media">
+                  <img
+                    style={{ width: '64px', height: '64px' }}
+                    src="https://res.cloudinary.com/dq7aojv62/image/upload/v1567757889/user_cutuu3.png"
+                    alt=""
+                    className="mr-3"
+                  />
+                  <div className="media-body">
+                    <h5 className="mt-0">User 1</h5>
+                    <p>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Laborum voluptatem similique pariatur sunt, eius
+                      asperiores error dolores explicabo consequatur sit dolorem
+                      repudiandae in delectus quam cum. Perferendis aspernatur
+                      officia veritatis.
+                    </p>
+
+                    <div className="media mt-3">
+                      <img
+                        style={{ width: '64px', height: '64px' }}
+                        src="https://res.cloudinary.com/dq7aojv62/image/upload/v1567757889/user_cutuu3.png"
+                        alt=""
+                        className="mr-3"
+                      />
+                      <div className="media-body">
+                        <h5 className="mt-0">User 2</h5>
+                        <p>
+                          Lorem ipsum dolor, sit amet consectetur adipisicing
+                          elit. Quo, ipsam tempore dolore perferendis saepe
+                          eaque molestiae corrupti, fugiat laudantium omnis
+                          dicta velit quidem? Ipsa quam tenetur at voluptatibus
+                          ipsam?
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </CustomCard>
-      </IdeaDetailsInner>
-    </IdeaDetailsWrapper>
-  );
+          </CustomCard>
+        </IdeaDetailsInner>
+      </IdeaDetailsWrapper>
+    );
+  }
 }
 
 const IdeaDetailsWrapper = styled.div`
@@ -102,8 +106,9 @@ const IdeaDetailsReactions = styled.div`
 
 export default connect(
   ({ ideas }, { match: { params } }) => {
+    if (!ideas.length) return { idea: undefined };
     return {
-      idea: ideas.find(idea => parseInt(idea.id) === parseInt(params.id))
+      idea: ideas.find(idea => idea.id === params.id)
     };
   },
   ideasActions

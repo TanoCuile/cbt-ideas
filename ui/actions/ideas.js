@@ -43,24 +43,44 @@ const addDislikeToIdea = (id) => {
   };
 }
 
-const createIdea = (fields) => {
+const getIdeas = () => {
+
+  return dispatch => {
+
+    dispatch({
+      type: 'GET_ALL_IDEAS_ATTEMPT',
+    })
+
+    return api.getAllIdeas().then(({ data }) => {
+      return dispatch({
+        type: 'GET_ALL_IDEAS_SUCCESS',
+        content: data
+      })
+    })
+  }
+
+}
+
+const createIdea = (fields, successRedirect) => {
   return dispatch => {
     dispatch({
       type: 'CREATE_IDEA_ATTEMPT',
     });
 
-    return api.createIdea(fields).then(status => {
-      return dispatch({
+    return api.createIdea(fields).then(({ data }) => {
+      dispatch({
         type: 'CREATE_IDEA_SUCCESS',
-        content: fields
+        content: fields,
       });
-    })
-  }
-}
+      return successRedirect(data._id);
+    });
+  };
+};
 
 
 export default {
   addLikeToIdea,
   addDislikeToIdea,
   createIdea,
+  getIdeas,
 };

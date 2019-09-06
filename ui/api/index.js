@@ -6,8 +6,7 @@ const likeIdea = id => {
   return Axios({
     data: {},
     method: 'POST',
-    // url: `/api/ideas/${id}/like`,
-    url: `/api/ideas/0/like`,
+    url: `/api/ideas/${id}/like`,
   });
 };
 
