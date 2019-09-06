@@ -1,4 +1,5 @@
 import { Repository } from 'typeorm';
+import { ObjectID } from 'mongodb';
 import { Idea } from '../models/idea.model';
 import { IdeasDBServiceInterface } from '../../ideas/interfaces/ideas.db.service.interface';
 import { IdeaInterface } from '../../ideas/interfaces/idea.interface';
@@ -7,7 +8,9 @@ import { CreateIdeaRequest } from 'src/modules/ideas/interfaces/createIdea.inter
 
 @Injectable()
 export class IdeasDBService implements IdeasDBServiceInterface {
-  constructor(@Inject('IDEAS_REPOSITORY') protected ideasRepository: Repository<Idea>) {}
+  constructor(
+    @Inject('IDEAS_REPOSITORY') protected ideasRepository: Repository<Idea>,
+  ) {}
 
   create(idea: CreateIdeaRequest): Promise<IdeaInterface> {
     return this.ideasRepository.save(this.ideasRepository.create(idea));
@@ -27,6 +30,8 @@ export class IdeasDBService implements IdeasDBServiceInterface {
   }
 
   async findById(id: string): Promise<IdeaInterface> {
-    return (await this.ideasRepository.findByIds([id]))[0];
+    return await this.ideasRepository.findOne({
+      where: { _id: String(id).length > 10 ? new ObjectID(id) : id },
+    });
   }
 }

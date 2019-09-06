@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { Idea } from '../models/idea.model';
+import { ObjectID } from 'mongodb';
 import { Injectable, Inject } from '@nestjs/common';
 import { Comment } from '../models/comment.model';
 import { CommentDBServiceInterface } from '../../comments/interfaces/comment.db.service.interface';
@@ -44,6 +44,8 @@ export class CommentsDBService implements CommentDBServiceInterface {
   }
 
   async findById(id: string): Promise<Comment> {
-    return (await this.commentsRepository.findByIds([id]))[0];
+    return await this.commentsRepository.findOne({
+      where: { _id: String(id).length > 10 ? new ObjectID(id) : id },
+    });
   }
 }

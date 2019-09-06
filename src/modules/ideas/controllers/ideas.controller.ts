@@ -24,12 +24,12 @@ export class IdeasController {
   }
 
   @Post('/:id/like')
-  like(@Param() id: string) {
+  like(@Param('id') id: string) {
     return this.ideasService.like(id);
   }
 
   @Post('/:id/dislike')
-  dislike(@Param() id: string) {
+  dislike(@Param('id') id: string) {
     return this.ideasService.dislike(id);
   }
 }
