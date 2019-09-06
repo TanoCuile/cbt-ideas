@@ -3,12 +3,13 @@ import { Idea } from '../models/idea.model';
 import { IdeasDBServiceInterface } from '../../ideas/interfaces/ideas.db.service.interface';
 import { IdeaInterface } from '../../ideas/interfaces/idea.interface';
 import { Injectable, Inject } from '@nestjs/common';
+import { CreateIdeaRequest } from 'src/modules/ideas/interfaces/createIdea.interface';
 
 @Injectable()
 export class IdeasDBService implements IdeasDBServiceInterface {
   constructor(@Inject('IDEAS_REPOSITORY') protected ideasRepository: Repository<Idea>) {}
 
-  create(idea: IdeaInterface): Promise<IdeaInterface> {
+  create(idea: CreateIdeaRequest): Promise<IdeaInterface> {
     return this.ideasRepository.save(this.ideasRepository.create(idea));
   }
 
