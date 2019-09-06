@@ -25,13 +25,13 @@ async function bootstrap() {
 
   const fixturesProvider = app.get<FixturesProvider>('FIXTURES_PROVIDER');
 
-  if (await fixturesProvider.shouldImportFixtures()) {
-    if (await fixturesProvider.import()) {
-      console.log('Fixtures loaded');
-    } else {
-      console.error('Fixtures not loaded');
-    }
-  }
+  // if (await fixturesProvider.shouldImportFixtures()) {
+  //   if (await fixturesProvider.import()) {
+  //     console.log('Fixtures loaded');
+  //   } else {
+  //     console.error('Fixtures not loaded');
+  //   }
+  // }
 
   await app.listen(3000);
 }
