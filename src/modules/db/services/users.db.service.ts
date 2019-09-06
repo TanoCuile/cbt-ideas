@@ -3,9 +3,10 @@ import { ObjectID } from 'mongodb';
 import { Idea } from '../models/idea.model';
 import { Injectable, Inject } from '@nestjs/common';
 import { User } from '../models/user.model';
+import { UserDBServiceInterface } from '../../user/interfaces/user.db.service.interface';
 
 @Injectable()
-export class UsersDBService {
+export class UsersDBService implements UserDBServiceInterface {
   constructor(
     @Inject('USERS_REPOSITORY') protected usersRepository: Repository<User>,
   ) {}
@@ -18,9 +19,7 @@ export class UsersDBService {
     return this.usersRepository.find();
   }
 
-  getByCriteria(
-    criteria: { [key in keyof User]?: any },
-  ): Promise<User[]> {
+  getByCriteria(criteria: { [key in keyof User]?: any }): Promise<User[]> {
     return this.usersRepository.find({ where: criteria });
   }
 
