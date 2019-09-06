@@ -10,7 +10,7 @@ export class CommentsSubscriber implements EntitySubscriberInterface<Comment> {
   constructor(
     @Inject('MONGO_DB_CONNECTION') private readonly connection: Connection,
     @Inject('IdeasDBService') private readonly ideasDBService: IdeasDBServiceInterface,
-    @Inject('UsersDBService') private readonly usersDBService: UsersDBService,
+    // @Inject('UsersDBService') private readonly usersDBService: UsersDBService,
     private readonly mailer: MailService
   ) {
     this.connection.subscribers.push(this);
@@ -23,8 +23,8 @@ export class CommentsSubscriber implements EntitySubscriberInterface<Comment> {
   async afterInsert(event: InsertEvent<Comment>) {
     const comment = event.entity;
     const idea = await this.ideasDBService.findById(comment.ideaId);
-    const user = await this.usersDBService.findById(idea.owner);
+    // const user = await this.usersDBService.findById(idea.owner);
 
-    return this.mailer.send(user.email, idea.title, comment.message);
+    return this.mailer.send(null, idea.title, comment.message); // send to owner
   }
 }

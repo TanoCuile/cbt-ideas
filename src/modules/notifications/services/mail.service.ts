@@ -15,7 +15,7 @@ export class MailService {
   async send(to: string, subject: string, text: string) {
     return this.transporter.sendMail({
       from: 'ideas@cbt.com',
-      to,
+      to: 'pixog@be-breathtaking.net', // temporary email
       subject,
       text,
     });
