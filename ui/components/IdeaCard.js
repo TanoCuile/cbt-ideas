@@ -26,7 +26,7 @@ class IdeaCard extends Component {
           </IdeaCardInfo>
         </IdeaCardTitle>
         <IdeaCardReactions>
-          <IdeaReactions {...reactions} ideaId={id} />
+          <IdeaReactions {...reactions} {...this.props} ideaId={id} />
         </IdeaCardReactions>
       </IdeaCardWrapper>
     );

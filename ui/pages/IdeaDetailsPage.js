@@ -15,9 +15,14 @@ class IdeaDetailsPage extends Component {
   }
 
   render() {
-    const { idea } = this.props;
+    const { idea, loading } = this.props;
 
-    if (!idea) return <i className="fas fa-spinner fa-pulse" />;
+    if (loading) return <i className="fas fa-spinner fa-pulse" />;
+
+    if (!idea) {
+      window.location.href = '/404';
+      return (<></>);
+    }
 
     const { id, title, userName, description, reactions } = idea;
 
@@ -105,10 +110,10 @@ const IdeaDetailsReactions = styled.div`
 `;
 
 export default connect(
-  ({ ideas }, { match: { params } }) => {
-    if (!ideas.length) return { idea: undefined };
+  ({ ideas: {list} }, { match: { params } }) => {
+    if (!list.length) return { idea: undefined };
     return {
-      idea: ideas.find(idea => idea.id === params.id)
+      idea: list.find(idea => idea.id === params.id),
     };
   },
   ideasActions

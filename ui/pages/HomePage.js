@@ -40,7 +40,7 @@ class HomePage extends Component {
       );
 
     if (!ideasList.length) return <h1>There is no ideas for now.</h1>
-
+    console.log('ideasList', ideasList);
     return (
       <>
         {/* <Banner/> */}

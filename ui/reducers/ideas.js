@@ -37,20 +37,24 @@ const ideasReducer = (state = initialState, action) => {
         ...state,
         list: [
           ...list.slice(0, index),
-          { ...list[index], reactions: { loading: true } },
+          {
+            ...list[index],
+            reactions: { ...list[index].reactions, loading: true },
+          },
           ...list.slice(index + 1),
         ],
       };
 
     case 'ADD_LIKE_TO_IDEA_SUCCESS':
       index = list.findIndex(item => item.id === content.id);
+      console.log('list[index]', list[index]);
       return {
         ...state,
         list: [
           ...list.slice(0, index),
           {
             ...list[index],
-            reactions: { likes: list[index].likes + 1, loading: false },
+            reactions: { ...list[index].reactions, likes: list[index].reactions.likes + 1, loading: false },
           },
           ...list.slice(index + 1),
         ],
@@ -62,7 +66,10 @@ const ideasReducer = (state = initialState, action) => {
         ...state,
         list: [
           ...list.slice(0, index),
-          { ...list[index], reactions: { loading: true } },
+          {
+            ...list[index],
+            reactions: { ...list[index].reactions, loading: true },
+          },
           ...list.slice(index + 1),
         ],
       };
@@ -76,7 +83,8 @@ const ideasReducer = (state = initialState, action) => {
           {
             ...list[index],
             reactions: {
-              dislikes: list[index].dislikes + 1,
+              ...list[index].reactions,
+              dislikes: list[index].reactions.dislikes + 1,
               loading: false,
             },
           },
