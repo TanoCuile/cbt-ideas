@@ -14,7 +14,8 @@ class ShareIdeaForm extends Component {
     e.preventDefault();
     const { createIdea } = this.props;
     this.setState({ title:"", description:"" });
-    createIdea(this.state);
+    const history = this.props.history
+    createIdea(this.state, id => history.push(`/idea/${id}`));
   }
 
   onChange = (e) => {

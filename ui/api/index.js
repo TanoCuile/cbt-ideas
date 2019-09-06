@@ -55,7 +55,6 @@ const saveComment = ({ ideaId, commentData }) => {
     url: `/api/comments/${ideaId}`,
   });
 };
-testAPI();
 
 export default {
   likeIdea,

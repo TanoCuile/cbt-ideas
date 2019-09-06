@@ -1,6 +1,38 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
+import { Link } from 'react-router-dom';
+
+import IdeaReactions from '../components/IdeaReactions';
+
+class IdeaCard extends Component {
+
+  render() {
+    const {
+      id,
+      title,
+      userName,
+      commentsCount,
+      reactions
+    } = this.props;
+
+    return (
+      <IdeaCardWrapper>
+        <IdeaCardTitle>
+          <Link to={`/idea/${id}`}>{title}</Link>
+          <IdeaCardInfo>
+            <p className="posted-by">Posted by {userName}</p>
+            <p className="comments">Comments: {commentsCount}</p>
+          </IdeaCardInfo>
+        </IdeaCardTitle>
+        <IdeaCardReactions>
+          <IdeaReactions {...reactions} {...this.props} ideaId={id} />
+        </IdeaCardReactions>
+      </IdeaCardWrapper>
+    );
+  }
+}
+
 const IdeaCardWrapper = styled.div`
   min-width: 600px;
   border: 1px solid ${({ theme }) => theme.blue};
@@ -39,93 +71,8 @@ const IdeaCardInfo = styled.div`
 `;
 
 const IdeaCardReactions = styled.div`
-  display: flex;
+  display:flex;
   flex-direction: column;
-  justify-content: center;
-
-  .loading-spinner {
-    font-size: 20px;
-    margin: 15px;
-  }
-
-  button {
-    margin: 5px;
-    background: none;
-    box-shadow: none;
-    border: none;
-    cursor: pointer;
-    font-size: 12px;
-    outline: none;
-    display: flex;
-    align-items: center;
-
-    i {
-      font-size: 20px;
-      padding-right: 10px;
-    }
-  }
-
-  .reaction-like {
-    :hover {
-      color: ${({ theme }) => theme.green};
-    }
-  }
-  .reaction-dislike {
-    :hover {
-      color: ${({ theme }) => theme.red};
-    }
-  }
 `;
-
-class IdeaCard extends Component {
-
-  render() {
-    const {
-      id,
-      title,
-      userName,
-      commentsCount,
-      likes,
-      dislikes,
-      addLikeToIdea,
-      addDislikeToIdea,
-      loading
-    } = this.props;
-
-    return (
-      <IdeaCardWrapper>
-        <IdeaCardTitle>
-          <a href="#">{title}</a>
-          <IdeaCardInfo>
-            <p className="posted-by">Posted by {userName}</p>
-            <p className="comments">Comments: {commentsCount}</p>
-          </IdeaCardInfo>
-        </IdeaCardTitle>
-        <IdeaCardReactions>
-          {
-            loading
-            ? (<i className="fas fa-spinner fa-pulse loading-spinner" />)
-            : (
-              <>
-              <button className="reaction-like" onClick={() => addLikeToIdea(id)}>
-                <i className="fas fa-thumbs-up" />
-                <p>{likes}</p>
-              </button>
-              <button
-                className="reaction-dislike"
-                onClick={() => addDislikeToIdea(id)}
-              >
-                <i className="fas fa-thumbs-down" />
-                <p>{dislikes}</p>
-              </button>
-              </>
-            )
-          }
-
-        </IdeaCardReactions>
-      </IdeaCardWrapper>
-    );
-  }
-}
 
 export default IdeaCard;

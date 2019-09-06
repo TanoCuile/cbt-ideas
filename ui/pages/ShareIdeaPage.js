@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Banner from '../components/Banner';
 import ShareIdeaForm from '../components/ShareIdeaForm';
 
-const ShareIdeaPage = () => {
+const ShareIdeaPage = props => {
   return (
     <>
       {/* <Banner /> */}
@@ -17,7 +17,7 @@ const ShareIdeaPage = () => {
             <br />
             Read existing <Link to="/">Ideas</Link> first!
           </div>
-          <ShareIdeaForm />
+          <ShareIdeaForm {...props} />
         </ShareIdeaInner>
       </ShareIdeaWrapper>
     </>

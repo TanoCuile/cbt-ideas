@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { DbModule } from '../db/db.module';
+import { MailService } from './services/mail.service';
 
 @Module({
-  imports: [DbModule],
-  providers: [],
-
+  imports: [],
+  providers: [MailService],
+  exports: [MailService]
 })
 export class NotificationModule{}

@@ -7,6 +7,7 @@ import { ClassProvider } from '@nestjs/common/interfaces';
 import { commentsRepositoryProvider } from './providers/comments.repository.provider';
 import { usersRepositoryProvider } from './providers/users.repository.provider';
 import { CommentsDBService } from './services/comments.db.service';
+import { UsersDBService } from './services/users.db.service';
 
 @Module({
   imports: [],
@@ -24,13 +25,19 @@ import { CommentsDBService } from './services/comments.db.service';
       provide: 'CommentsDBService',
       useClass: CommentsDBService,
     } as ClassProvider<CommentsDBService>,
+    {
+      provide: 'UsersDBService',
+      useClass: UsersDBService,
+    } as ClassProvider<UsersDBService>,
   ],
   exports: [
     'IdeasDBService',
     'CommentsDBService',
+    'UsersDBService',
     'IDEAS_REPOSITORY',
     'COMMENTS_REPOSITORY',
     'USERS_REPOSITORY',
+    'MONGO_DB_CONNECTION'
   ],
 })
 export class DbModule {}
