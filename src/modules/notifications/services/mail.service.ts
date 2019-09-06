@@ -12,12 +12,12 @@ export class MailService {
     });
   }
 
-  send() {
-    this.transporter.sendMail({
+  async send(to: string, subject: string, text: string) {
+    return this.transporter.sendMail({
       from: 'ideas@cbt.com',
-      to: 'bohdan.lubenets@gmail.com',
-      subject: 'Test',
-      text: 'Test text.',
+      to,
+      subject,
+      text,
     });
   }
 }
