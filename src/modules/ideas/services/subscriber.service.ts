@@ -19,6 +19,7 @@ export class IdeasSubscriber implements EntitySubscriberInterface<Idea> {
   async afterInsert(event: InsertEvent<Idea>) {
     const idea = event.entity;
 
-    return this.mailer.send(null, idea.title, idea.description); // send to support
+    /** @todo pass support email */
+    return this.mailer.send(null, idea.title, idea.description);
   }
 }

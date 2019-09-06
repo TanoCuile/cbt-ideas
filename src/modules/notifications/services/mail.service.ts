@@ -12,10 +12,11 @@ export class MailService {
     });
   }
 
+  /** @todo use passed email */
   async send(to: string, subject: string, text: string) {
     return this.transporter.sendMail({
       from: 'ideas@cbt.com',
-      to: 'pixog@be-breathtaking.net', // temporary email
+      to: 'pixog@be-breathtaking.net',
       subject,
       text,
     });

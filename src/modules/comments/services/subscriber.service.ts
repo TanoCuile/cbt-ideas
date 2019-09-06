@@ -25,6 +25,7 @@ export class CommentsSubscriber implements EntitySubscriberInterface<Comment> {
     const idea = await this.ideasDBService.findById(comment.ideaId);
     // const user = await this.usersDBService.findById(idea.owner);
 
-    return this.mailer.send(null, idea.title, comment.message); // send to owner
+    /** @todo uncomment getting user and pass user.email */
+    return this.mailer.send(null, idea.title, comment.message);
   }
 }
