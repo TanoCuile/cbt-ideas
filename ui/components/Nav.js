@@ -40,10 +40,10 @@ const Nav = () => {
           />
         </NavItem>
         <NavItem>
-          <Link to="/">Home</Link>
+          <Link to="/">All Ideas</Link>
         </NavItem>
         <NavItem>
-          <Link to="/ideas/create">Share Ideas</Link>
+          <Link to="/ideas/create">Create New Idea</Link>
         </NavItem>
       </NavInner>
     </NavWrapper>
