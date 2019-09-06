@@ -20,17 +20,17 @@ export class FixturesProvider {
 
   async import(): Promise<boolean> {
     try {
-      const ideasFixtures = JSON.parse(
-        readFileSync(
-          resolve(process.cwd(), 'resources', 'fixtures', 'ideas.fixture.json'),
-        ).toString(),
-      ) as Idea[];
-
       const usersFixtures = JSON.parse(
         readFileSync(
           resolve(process.cwd(), 'resources', 'fixtures', 'users.fixture.json'),
         ).toString(),
       );
+
+      const ideasFixtures = JSON.parse(
+        readFileSync(
+          resolve(process.cwd(), 'resources', 'fixtures', 'ideas.fixture.json'),
+        ).toString(),
+      ) as Idea[];
 
       const commentsFixtures = JSON.parse(
         readFileSync(
@@ -49,14 +49,14 @@ export class FixturesProvider {
           .map(idea => this.ideasRepo.save(idea)),
       );
       await Promise.all(
-        commentsFixtures
-          .map(raw => Object.assign(new Comment(), raw))
-          .map(comment => this.commentsRepo.save(comment)),
-      );
-      await Promise.all(
         usersFixtures
           .map(raw => Object.assign(new User(), raw))
           .map(user => this.userRepo.save(user)),
+      );
+      await Promise.all(
+        commentsFixtures
+          .map(raw => Object.assign(new Comment(), raw))
+          .map(comment => this.commentsRepo.save(comment)),
       );
       console.log('OK');
       return true;

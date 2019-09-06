@@ -12,6 +12,7 @@ export class IdeasService {
 
   async create(item: CreateIdeaRequest, userId: string = DEFAULT_USER_ID) {
     const idea = await this.dbService.create(item);
+    idea.owner = userId;
     this.setupIdeaFields(idea);
     return await this.dbService.findByIdAndUpdate(idea.id, idea);
   }
