@@ -31,6 +31,7 @@ import { CommentsDBService } from './services/comments.db.service';
     'IDEAS_REPOSITORY',
     'COMMENTS_REPOSITORY',
     'USERS_REPOSITORY',
+    'MONGO_DB_CONNECTION'
   ],
 })
 export class DbModule {}
