@@ -18,7 +18,6 @@ export class CommentsSubscriber implements EntitySubscriberInterface<Idea> {
   }
 
   afterInsert(event: InsertEvent<Idea>) {
-    console.error('not implemented');
     this.mailer.send();
   }
 }

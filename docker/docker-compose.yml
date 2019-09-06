@@ -13,6 +13,9 @@ services:
     ports:
         - 27017:27017
 
+  smtp:
+    image: namshi/smtp
+
   db_admin:
     build:
       context: ../db_admin
@@ -45,10 +48,12 @@ services:
       NODE_ENV: develop
     links:
       - database
+      - smtp
     ports:
      - "3006:3000"
 
 volumes:
   database:
   db_admin:
+  smtp:
   cbt_ideas:

@@ -7,17 +7,14 @@ export class MailService {
 
   constructor() {
     this.transporter = createTransport({
-      host: 'smtp.gmail.com',
-      auth: {
-        user: 'bohdan.lubenets',
-        pass: 'eozlpqbhfyejfvco'
-      }
+      host: 'smtp',
+      port: 25
     });
   }
 
   send() {
     this.transporter.sendMail({
-      from: 'bohdan.lubenets@gmail.com',
+      from: 'ideas@cbt.com',
       to: 'bohdan.lubenets@gmail.com',
       subject: 'Test',
       text: 'Test text.',
