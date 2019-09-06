@@ -17,12 +17,12 @@ export class WebController {
     );
   }
 
-  @Get('/ideas/*')
+  @Get('/ideas*')
   async getIdeas() {
     return this.getIndex();
   }
 
-  @Get('/ideas*')
+  @Get('/idea/*')
   async getIdea() {
     return this.getIndex();
   }

@@ -26,13 +26,7 @@ const HomePage = props => {
           {ideasList.map(idea => (
             <IdeaCard
               key={idea.id}
-              id={idea.id}
-              title={idea.title}
-              userName={idea.userName}
-              commentsCount={idea.commentsCount}
-              likes={idea.likes}
-              dislikes={idea.dislikes}
-              loading={idea.loading}
+              {...idea}
               {...props}
             />
           ))}

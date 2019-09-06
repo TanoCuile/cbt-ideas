@@ -1,6 +1,17 @@
 import ideasData from '../mocks/ideasData.json';
 
-const initialState = ideasData.map(idea => ({...idea, loading: false}));
+const initialState = ideasData.map(idea => ({
+  id: idea.id,
+  title: idea.title,
+  description: idea.description,
+  userName: idea.userName,
+  commentsCount: idea.commentsCount,
+  reactions: {
+    likes: idea.likes,
+    dislikes: idea.dislikes,
+    loading: false
+  }
+}));
 
 const ideasReducer = (state = initialState, action) => {
   const content = action.content;
@@ -10,7 +21,7 @@ const ideasReducer = (state = initialState, action) => {
       index = state.findIndex(item => item.id === content.id);
       return [
         ...state.slice(0, index),
-        { ...state[index], loading: true },
+        { ...state[index], reactions: { loading: true } },
         ...state.slice(index + 1),
       ];
 
@@ -18,7 +29,7 @@ const ideasReducer = (state = initialState, action) => {
       index = state.findIndex(item => item.id === content.id);
       return [
         ...state.slice(0, index),
-        { ...state[index], likes: state[index].likes + 1, loading: false },
+        { ...state[index], reactions: { likes: state[index].likes + 1, loading: false } },
         ...state.slice(index + 1),
       ];
 
@@ -26,7 +37,7 @@ const ideasReducer = (state = initialState, action) => {
       index = state.findIndex(item => item.id === content.id);
       return [
         ...state.slice(0, index),
-        { ...state[index], loading: true },
+        { ...state[index], reactions: { loading: true } },
         ...state.slice(index + 1),
       ];
 
@@ -34,7 +45,7 @@ const ideasReducer = (state = initialState, action) => {
       index = state.findIndex(item => item.id === content.id);
       return [
         ...state.slice(0, index),
-        { ...state[index], dislikes: state[index].dislikes + 1, loading: false },
+        { ...state[index], reactions: { dislikes: state[index].dislikes + 1, loading: false } },
         ...state.slice(index + 1),
       ];
 
