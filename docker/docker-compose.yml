@@ -1,0 +1,54 @@
+version: '3'
+services:
+  database:
+    image: mongo:3.6
+    # environment:
+      # MONGO_DATA_DIR: /data/db
+      # MONGO_LOG_DIR: /dev/null
+    container_name: database
+    expose:
+      - 27017
+    # volumes:
+      # - ../../temp/ideas_mongo_data/db:/data/db
+    ports:
+        - 27017:27017
+
+  db_admin:
+    build:
+      context: ../db_admin
+    environment:
+      CONN_NAME: whatever
+      DB_HOST: database
+      DB_PORT: 27017
+      # DB_USERNAME: root
+      # DB_PASSWORD: example
+    ports:
+      - "3007:8082"
+    links:
+      - database
+
+  cbt_ideas:
+    # restart: always
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+      args:
+        NODE_ENV: develop
+    volumes:
+      - '../src:/srv/app/src'
+      - '../resources:/srv/app/resources'
+      - '../ui:/srv/app/ui'
+      - '../test:/srv/app/test'
+      - '../static:/srv/app/static'
+      - '../package.json:/srv/app/package.json'
+    environment:
+      NODE_ENV: develop
+    links:
+      - database
+    ports:
+     - "3006:3000"
+
+volumes:
+  database:
+  db_admin:
+  cbt_ideas:
