@@ -4,9 +4,11 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { resolve } from 'path';
 import { FixturesProvider } from './modules/fixtures/providers/fixtures.provider';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.use(cookieParser());
   app.useStaticAssets(resolve(process.cwd(), 'static'), {
     extensions: ['js', 'css'],
     prefix: '/static',

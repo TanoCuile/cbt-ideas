@@ -55,7 +55,17 @@ const saveComment = ({ ideaId, commentData }) => {
     url: `/api/comments/${ideaId}`,
   });
 };
-
+const getUserInfo = () => {
+  return {
+    id: '5d7212fff6d77c00a53370b9',
+    name: 'Ivan',
+    token: '---',
+    email: 'i@van.com',
+    role: 'ARRANGER',
+    company: 'Main',
+  };
+};
+testAPI();
 export default {
   likeIdea,
   dislikeIdea,
@@ -63,20 +73,12 @@ export default {
   getAllIdeas,
   getIdeaComments,
   saveComment,
+  getUserInfo,
 };
 
 function testAPI() {
   let ideaId;
-  const token = getTockenFromQuery();
-  if (token) {
-    const exdays = 1;
-    const cookieName = 'ct_tok';
-    const currentDate = new Date();
-    currentDate.setTime(currentDate.getTime() + exdays * 24 * 60 * 60 * 1000);
-    const expires = 'expires=' + currentDate.toUTCString();
-
-    document.cookie = cookieName + '=' + token + ';' + expires + ';path=/';
-  }
+  authUser();
   createIdea({
     title: 'Blah1',
     description: 'BLAH BLAH1',
@@ -118,6 +120,18 @@ function testAPI() {
       console.log(resp);
     });
 }
+function authUser() {
+  const token = getTockenFromQuery();
+  if (token) {
+    const exdays = 1;
+    const cookieName = 'ct_tok';
+    const currentDate = new Date();
+    currentDate.setTime(currentDate.getTime() + exdays * 24 * 60 * 60 * 1000);
+    const expires = 'expires=' + currentDate.toUTCString();
+    document.cookie = cookieName + '=' + token + ';' + expires + ';path=/';
+  }
+}
+
 function getTockenFromQuery() {
   const query = window.location.href.split('?')[1];
   if (query) {

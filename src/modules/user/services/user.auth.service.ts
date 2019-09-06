@@ -9,8 +9,10 @@ export class UserAuthService {
   ) {}
 
   async isValidWith(userToken: string): Promise<boolean> {
-    const token = userToken
-    const user = await this.userDbService.getByCriteria({ token });
-    return !!user;
+    return !!(await this.getUserByToken(userToken));
+  }
+
+  private async getUserByToken(userToken: string) {
+    return await this.userDbService.getByCriteria({ token: userToken });
   }
 }
