@@ -20,6 +20,10 @@ export class IdeasService {
     return this.dbService.find();
   }
 
+  async getById(ideaId: string) {
+    return this.dbService.findById(ideaId);
+  }
+
   setupIdeaFields(idea: IdeaInterface) {
     if (!idea.usersWhoDisliked) {
       idea.usersWhoDisliked = [];

@@ -26,6 +26,11 @@ export class IdeasController {
     return this.ideasService.getAll();
   }
 
+  @Get('/:id')
+  get(@Param('id') id: string) {
+    return this.ideasService.getById(id);
+  }
+
   @Post('/:id/like')
   like(@Param('id') id: string) {
     return this.ideasService.like(id);
