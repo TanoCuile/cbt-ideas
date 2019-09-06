@@ -7,14 +7,15 @@ import {
 } from '@nestjs/common';
 
 import { IdeasService } from '../services/ideas.service';
+import { CreateIdeaRequest } from '../interfaces/createIdea.interface';
 
 @Controller('api/ideas')
 export class IdeasController {
   constructor(private readonly ideasService: IdeasService) {}
 
   @Post()
-  create(@Body() post: any) {
-    return this.ideasService.create(post);
+  create(@Body() idea: CreateIdeaRequest) {
+    return this.ideasService.create(idea);
   }
 
   @Get()
@@ -23,12 +24,12 @@ export class IdeasController {
   }
 
   @Post('/:id/like')
-  like(@Param() id: string) {
+  like(@Param('id') id: string) {
     return this.ideasService.like(id);
   }
 
   @Post('/:id/dislike')
-  dislike(@Param() id: string) {
+  dislike(@Param('id') id: string) {
     return this.ideasService.dislike(id);
   }
 }

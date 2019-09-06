@@ -31,11 +31,8 @@ const createIdea = fields => {
   });
 };
 
-const getAllIdeas = fields => {
-  if (!fields) return null;
-
+const getAllIdeas = () => {
   return Axios({
-    data: fields,
     method: 'GET',
     url: `/api/ideas`,
   });
@@ -59,6 +56,7 @@ const saveComment = ({ ideaId, commentData }) => {
     url: `/api/comments/${ideaId}`,
   });
 };
+// testAPI();
 
 export default {
   likeIdea,
@@ -68,3 +66,47 @@ export default {
   getIdeaComments,
   saveComment,
 };
+
+function testAPI() {
+  let ideaId;
+  createIdea({
+    title: 'Blah1',
+    description: 'BLAH BLAH1',
+    likes: 0,
+    dislikes: 0,
+    owner: '1',
+    usersWhoLiked: ['2'],
+    usersWhoDisliked: ['3'],
+  })
+    .then(resp => {
+      ideaId = resp.data._id;
+    })
+    .then(() => getAllIdeas())
+    .then(resp => {})
+    .then(() => likeIdea(ideaId))
+    .then(resp => {
+      console.log(resp);
+    })
+    .then(() => dislikeIdea(ideaId))
+    .then(resp => {
+      console.log(resp);
+    })
+    .then(() =>
+      saveComment({
+        ideaId,
+        commentData: {
+          message: 'Super',
+          ideaId: '1',
+          userId: '1',
+          mensionedUsers: [],
+        },
+      }),
+    )
+    .then(resp => {
+      console.log(resp);
+    })
+    .then(() => getIdeaComments(ideaId))
+    .then(resp => {
+      console.log(resp);
+    });
+}

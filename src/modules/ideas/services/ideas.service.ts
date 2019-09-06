@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { IdeaInterface } from '../interfaces/idea.interface';
+import { CreateIdeaRequest } from '../interfaces/createIdea.interface';
 import { IdeasDBServiceInterface } from '../interfaces/ideas.db.service.interface';
 
 @Injectable()
@@ -8,7 +9,7 @@ export class IdeasService {
     @Inject('IdeasDBService') protected dbService: IdeasDBServiceInterface,
   ) {}
 
-  create(item: IdeaInterface) {
+  create(item: CreateIdeaRequest) {
     return this.dbService.create(item);
   }
 
