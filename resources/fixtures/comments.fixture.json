@@ -1,9 +1,8 @@
 [
   {
-    "id": "1",
     "message": "Super",
-    "ideaId": "1",
-    "userId": "1",
-    "mensionedUsers": ["2", "3"]
+    "ideaId": "5d7212a11ad4800095ae8940",
+    "userId": "5d7212fff6d77c00a53370b9",
+    "mensionedUsers": ["5d7212371ad4800095ae893e", "5d723bd6ce437d0011484e13"]
   }
 ]
