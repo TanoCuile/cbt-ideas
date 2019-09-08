@@ -1,29 +1,24 @@
 import api from '../api';
 
-const addLikeToIdea = (id) => {
+const addLikeToIdea = id => {
   return dispatch => {
-
     dispatch({
       type: 'ADD_LIKE_TO_IDEA_ATTEMPT',
       content: {
-        id
-      }
-    })
+        id,
+      },
+    });
 
-    return api.likeIdea(id)
-      .then(status => {
-        return dispatch({
-          type: 'ADD_LIKE_TO_IDEA_SUCCESS',
-          content: {
-            id,
-          },
-        });
-      })
-  }
-}
+    return api.likeIdea(id).then(({ data }) => {
+      return dispatch({
+        type: 'ADD_LIKE_TO_IDEA_SUCCESS',
+        content: data,
+      });
+    });
+  };
+};
 
-const addDislikeToIdea = (id) => {
-
+const addDislikeToIdea = id => {
   return dispatch => {
     dispatch({
       type: 'ADD_DISLIKE_TO_IDEA_ATTEMPT',
@@ -32,34 +27,29 @@ const addDislikeToIdea = (id) => {
       },
     });
 
-    return api.dislikeIdea(id).then(status => {
+    return api.dislikeIdea(id).then(({ data }) => {
       return dispatch({
         type: 'ADD_DISLIKE_TO_IDEA_SUCCESS',
-        content: {
-          id,
-        },
+        content: data,
       });
     });
   };
-}
+};
 
 const getIdeas = () => {
-
   return dispatch => {
-
     dispatch({
       type: 'GET_ALL_IDEAS_ATTEMPT',
-    })
+    });
 
     return api.getAllIdeas().then(({ data }) => {
       return dispatch({
         type: 'GET_ALL_IDEAS_SUCCESS',
-        content: data
-      })
-    })
-  }
-
-}
+        content: data,
+      });
+    });
+  };
+};
 
 const createIdea = (fields, successRedirect) => {
   return dispatch => {
@@ -72,11 +62,10 @@ const createIdea = (fields, successRedirect) => {
         type: 'CREATE_IDEA_SUCCESS',
         content: fields,
       });
-      return successRedirect(data._id);
+      return successRedirect(data.id);
     });
   };
 };
-
 
 export default {
   addLikeToIdea,

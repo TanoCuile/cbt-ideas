@@ -21,6 +21,23 @@ export class UserAuthService {
     return this.getUserByToken(token);
   }
 
+  async getUsersInfo(
+    userIds: string[],
+  ): Promise<Array<{ name: string; id: string }>> {
+    return this.getUserInfo(
+      await this.userDbService.getByCriteria({ id: userIds }),
+    );
+  }
+
+  getUserInfo(users: UserInterface[]): Array<{ name: string; id: string }> {
+    return users.map(user => {
+      return {
+        id: user.id,
+        name: user.name,
+      };
+    });
+  }
+
   async isValidWith(userToken: string): Promise<boolean> {
     const user = await this.getUserByToken(userToken);
     return !!user;

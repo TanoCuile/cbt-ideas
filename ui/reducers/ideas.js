@@ -19,11 +19,11 @@ const ideasReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         list: content.map(idea => ({
-          id: idea._id,
+          id: idea.id,
           title: idea.title,
           description: idea.description,
-          userName: 'User',
-          commentsCount: Math.round(Math.random() * 10),
+          userName: idea.userName,
+          commentsCount: idea.commentsCount,
           reactions: {
             likes: idea.likes || 0,
             dislikes: idea.dislikes || 0,
@@ -53,7 +53,7 @@ const ideasReducer = (state = initialState, action) => {
           ...list.slice(0, index),
           {
             ...list[index],
-            reactions: { ...list[index].reactions, likes: list[index].reactions.likes + 1, loading: false },
+            reactions: { dislikes: content.dislikes, likes: content.likes, loading: false },
           },
           ...list.slice(index + 1),
         ],
@@ -82,8 +82,8 @@ const ideasReducer = (state = initialState, action) => {
           {
             ...list[index],
             reactions: {
-              ...list[index].reactions,
-              dislikes: list[index].reactions.dislikes + 1,
+              likes: content.likes,
+              dislikes: content.dislikes,
               loading: false,
             },
           },

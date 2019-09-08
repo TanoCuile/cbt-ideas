@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import { ObjectID } from 'mongodb';
 import { Idea } from '../models/idea.model';
 import { Injectable, Inject } from '@nestjs/common';
@@ -19,8 +19,27 @@ export class UsersDBService implements UserDBServiceInterface {
     return this.usersRepository.find();
   }
 
-  getByCriteria(criteria: { [key in keyof User]?: any }): Promise<User[]> {
-    return this.usersRepository.find({ where: criteria });
+  async getByCriteria(
+    criteria: { [key in keyof User]?: any },
+  ): Promise<User[]> {
+    if (criteria.id) {
+      if (Array.isArray(criteria.id)) {
+        criteria._id = { $in: criteria.id };
+      } else {
+        criteria._id = criteria.id;
+      }
+      delete criteria.id;
+    }
+
+    const where = {
+      $and: Object.keys(criteria).map(key => ({ [key]: criteria[key] })),
+    };
+
+    const result = await this.usersRepository.find({
+      where,
+    });
+
+    return result;
   }
 
   async findByIdAndUpdate(id: string, payload: Idea): Promise<User> {

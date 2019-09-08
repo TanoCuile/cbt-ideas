@@ -56,16 +56,12 @@ const saveComment = ({ ideaId, commentData }) => {
   });
 };
 const getUserInfo = () => {
-  return {
-    id: '5d7212fff6d77c00a53370b9',
-    name: 'Ivan',
-    token: '---',
-    email: 'i@van.com',
-    role: 'ARRANGER',
-    company: 'Main',
-  };
+  return Axios({
+    method: 'GET',
+    url: '/api/user',
+  });
 };
-testAPI();
+
 export default {
   likeIdea,
   dislikeIdea,
@@ -85,11 +81,11 @@ function testAPI() {
     likes: 0,
     dislikes: 0,
     owner: '1',
-    usersWhoLiked: ['2'],
-    usersWhoDisliked: ['3'],
+    usersWhoLiked: [],
+    usersWhoDisliked: [],
   })
     .then(resp => {
-      ideaId = resp.data._id;
+      ideaId = resp.data.id;
     })
     .then(() => getAllIdeas())
     .then(resp => {})

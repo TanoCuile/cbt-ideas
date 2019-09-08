@@ -4,6 +4,7 @@ export class IdeaInterface {
   @ApiModelProperty() id?: string;
   @ApiModelProperty() title: string;
   @ApiModelProperty() description: string;
+  @ApiModelProperty() commentsCount: number;
   @ApiModelProperty() likes: number;
   @ApiModelProperty() dislikes: number;
   @ApiModelProperty() usersWhoLiked: Array<string>;

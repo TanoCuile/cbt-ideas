@@ -30,8 +30,10 @@ export class IdeasDBService implements IdeasDBServiceInterface {
   }
 
   async findById(id: string): Promise<IdeaInterface> {
-    return await this.ideasRepository.findOne({
+    const idea = await this.ideasRepository.findOne({
       where: { _id: String(id).length > 10 ? new ObjectID(id) : id },
     });
+    console.log(idea, { _id: id });
+    return idea;
   }
 }

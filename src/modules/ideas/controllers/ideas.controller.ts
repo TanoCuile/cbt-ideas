@@ -7,6 +7,7 @@ import {
   UseGuards,
   Inject,
   Req,
+  UnauthorizedException,
 } from '@nestjs/common';
 
 import { IdeasService } from '../services/ideas.service';
@@ -14,6 +15,7 @@ import { CreateIdeaRequest } from '../interfaces/createIdea.interface';
 import { AuthGuard } from '../../../guards/auth.guard';
 import { UserAuthService } from '../../user/services/user.auth.service';
 import { Request } from 'express';
+import { IdeaInterface } from '../interfaces/idea.interface';
 
 @Controller('api/ideas')
 @UseGuards(AuthGuard)
@@ -27,33 +29,44 @@ export class IdeasController {
   async create(@Body() idea: CreateIdeaRequest, @Req() req: Request) {
     const user = await this.userAuthService.getUserFromRequest(req);
     if (user) {
-      return this.ideasService.create(idea, user.id);
+      const response = await this.ideasService.getResponseFromIdeas([await this.ideasService.create(idea, user.id)]);
+      return response[0];
     }
+    throw new UnauthorizedException();
   }
 
   @Get()
-  getAll() {
-    return this.ideasService.getAll();
+  async getAll() {
+    return await this.ideasService.getResponseFromIdeas(
+      await this.ideasService.getAll(),
+    );
   }
 
   @Get('/:id')
-  get(@Param('id') id: string) {
-    return this.ideasService.getById(id);
+  async get(@Param('id') id: string) {
+    const response = await this.ideasService.getResponseFromIdeas([
+      await this.ideasService.getById(id),
+    ]);
+    return response[0];
   }
 
   @Post('/:id/like')
   async like(@Param('id') id: string, @Req() req: Request) {
     const user = await this.userAuthService.getUserFromRequest(req);
     if (user) {
-      return this.ideasService.like(id, user.id);
+      await this.ideasService.like(id, user.id);
     }
+
+    return this.get(id);
   }
 
   @Post('/:id/dislike')
   async dislike(@Param('id') id: string, @Req() req: Request) {
     const user = await this.userAuthService.getUserFromRequest(req);
     if (user) {
-      return this.ideasService.dislike(id, user.id);
+      await this.ideasService.dislike(id, user.id);
     }
+
+    return this.get(id);
   }
 }

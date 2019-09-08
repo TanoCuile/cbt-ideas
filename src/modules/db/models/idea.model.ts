@@ -27,6 +27,9 @@ export class Idea implements IdeaInterface {
   likes: number;
 
   @Column()
+  commentsCount: number;
+
+  @Column()
   dislikes: number;
 
   @Column()
