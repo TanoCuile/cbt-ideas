@@ -3,7 +3,6 @@ import { ObjectID } from 'mongodb';
 import { Injectable, Inject } from '@nestjs/common';
 import { Comment } from '../models/comment.model';
 import { CommentDBServiceInterface } from '../../comments/interfaces/comment.db.service.interface';
-import { CommentInterface } from '../../comments/interfaces/comment.interface';
 
 @Injectable()
 export class CommentsDBService implements CommentDBServiceInterface {
@@ -22,12 +21,11 @@ export class CommentsDBService implements CommentDBServiceInterface {
     if (comment.id) {
       return this.findByIdAndUpdate(comment.id, comment);
     }
-
     return this.create(comment);
   }
 
-  create(idea: Comment): Promise<Comment> {
-    return this.commentsRepository.save(this.commentsRepository.create(idea));
+  create(item: Comment): Promise<Comment> {
+    return this.commentsRepository.save(this.commentsRepository.create(item));
   }
 
   find(): Promise<Comment[]> {

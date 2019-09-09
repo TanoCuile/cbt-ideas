@@ -104,7 +104,7 @@ function testAPI() {
           message: 'Super',
           ideaId: '1',
           userId: '1',
-          mensionedUsers: [],
+          mentionedUsers: [],
         },
       }),
     )

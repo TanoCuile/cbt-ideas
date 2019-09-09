@@ -7,6 +7,7 @@ import {
   Inject,
   Req,
 } from '@nestjs/common';
+import { ApiCreatedResponse, ApiResponse } from '@nestjs/swagger';
 import { CommentsService } from '../services/comments.service';
 import { CommentInterface } from '../interfaces/comment.interface';
 import { UserAuthService } from '../../user/services/user.auth.service';
@@ -20,21 +21,23 @@ export class CommentsController {
     @Inject(UserAuthService) protected userAuthService: UserAuthService,
   ) {}
 
-  @Post('/:idea_id')
+  @Post('/:ideaId')
+  @ApiCreatedResponse({ type: CommentInterface })
   async create(
-    @Param() ideaId: string,
+    @Param() { ideaId }: { ideaId: string },
     @Body() comment: CommentInterface,
     @Req() req: Request,
   ) {
     const user = await this.userAuthService.getUserFromRequest(req);
     if (user) {
-      comment.userId = user.id;
+      comment.user = user as any;
       return this.commentsService.create(ideaId, comment);
     }
   }
 
-  @Get('/:idea_id')
-  getByPost(@Param() ideaId: string) {
+  @Get('/:ideaId')
+  @ApiResponse({ status: 200, type: [CommentInterface] })
+  getByPost(@Param() { ideaId }: { ideaId: string }) {
     return this.commentsService.getByIdea(ideaId);
   }
 }
