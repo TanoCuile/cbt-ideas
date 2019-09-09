@@ -30,7 +30,7 @@ export class CommentsController {
   ) {
     const user = await this.userAuthService.getUserFromRequest(req);
     if (user) {
-      comment.userId = user.id;
+      comment.user = user as any;
       return this.commentsService.create(ideaId, comment);
     }
   }
