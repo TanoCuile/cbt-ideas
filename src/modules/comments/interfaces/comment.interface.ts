@@ -16,4 +16,5 @@ export class CommentInterface {
   @ApiModelProperty() user: User;
   @ApiModelProperty() mentionedUsers: string[];
   @ApiModelProperty() parentCommentId?: string;
+  @ApiModelProperty() createdAt: Date;
 }
