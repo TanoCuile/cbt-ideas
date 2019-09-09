@@ -21,12 +21,11 @@ export class CommentsDBService implements CommentDBServiceInterface {
     if (comment.id) {
       return this.findByIdAndUpdate(comment.id, comment);
     }
-
     return this.create(comment);
   }
 
-  create(idea: Comment): Promise<Comment> {
-    return this.commentsRepository.save(this.commentsRepository.create(idea));
+  create(item: Comment): Promise<Comment> {
+    return this.commentsRepository.save(this.commentsRepository.create(item));
   }
 
   find(): Promise<Comment[]> {

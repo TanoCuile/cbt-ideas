@@ -1,4 +1,4 @@
-import { Entity, ObjectIdColumn, ObjectID, Column } from 'typeorm';
+import { Entity, ObjectIdColumn, ObjectID, Column, CreateDateColumn } from 'typeorm';
 import { CommentInterface } from '../../comments/interfaces/comment.interface';
 import { User } from 'src/modules/comments/interfaces/comment.interface';
 
@@ -16,6 +16,9 @@ export class Comment implements CommentInterface {
   set id(id: string) {
     this._id = id as any;
   }
+
+  @CreateDateColumn({ type: 'timestamp' })
+  createdAt: Date;
 
   @Column()
   message: string;
