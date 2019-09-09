@@ -8,8 +8,15 @@ export class MailService {
 
   constructor() {
     this.transport = createTransport({
-      host: 'smtp',
-      port: 25,
+      host: '0.0.0.0',
+      port: 587,
+      secure: false,
+      auth: {
+        user: 'admin@cbtmp.id',
+        pass: '123',
+      },
+      tls: { rejectUnauthorized: false },
+      debug: true,
     });
   }
 
