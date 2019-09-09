@@ -1,5 +1,6 @@
 import { Entity, ObjectIdColumn, ObjectID, Column } from 'typeorm';
 import { CommentInterface } from '../../comments/interfaces/comment.interface';
+import { User } from 'src/modules/comments/interfaces/comment.interface';
 
 @Entity({
   name: 'comments',
@@ -23,7 +24,7 @@ export class Comment implements CommentInterface {
   ideaId: string;
 
   @Column()
-  userId: string;
+  user: User;
 
   @Column()
   mentionedUsers: string[];
