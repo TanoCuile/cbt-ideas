@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import { connect } from 'react-redux';
@@ -7,24 +7,36 @@ import ideasActions from '../actions/ideas';
 
 import IdeaReactions from '../components/IdeaReactions';
 
-
 class IdeaDetailsPage extends Component {
-
   componentDidMount() {
-    this.props.getIdeas();
+    const {
+      match: { params: { id } },
+    } = this.props;
+    this.props.getIdea(id);
   }
 
   render() {
-    const { list, loading, match: { params } } = this.props;
+    const {
+      idea,
+      loading,
+      match: { params },
+    } = this.props;
 
     if (loading) return <i className="fas fa-spinner fa-pulse" />;
-    const idea = list.find(idea => idea.id === params.id)
 
     if (!idea) {
-      return (<h1>Id With id {params.id} not found!</h1>);
+      return <h1>Idea With id {params.id} not found!</h1>;
     }
 
-    const { id, title, userName, description, reactions } = idea;
+    const {
+      id,
+      title,
+      userName,
+      description,
+      likes,
+      dislikes,
+      reactionsLoading,
+    } = idea;
 
     return (
       <IdeaDetailsWrapper>
@@ -39,9 +51,11 @@ class IdeaDetailsPage extends Component {
                 {description}
                 <IdeaDetailsReactions>
                   <IdeaReactions
-                    {...reactions}
-                    {...this.props}
                     ideaId={id}
+                    likes={likes}
+                    dislikes={dislikes}
+                    loading={false} // disable loading logic on reaction cause we set loading on all page in ideaReducer
+                    {...this.props}
                   />
                 </IdeaDetailsReactions>
               </div>
@@ -57,11 +71,11 @@ class IdeaDetailsPage extends Component {
                   <div className="media-body">
                     <h5 className="mt-0">User 1</h5>
                     <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing
-                      elit. Laborum voluptatem similique pariatur sunt, eius
-                      asperiores error dolores explicabo consequatur sit
-                      dolorem repudiandae in delectus quam cum. Perferendis
-                      aspernatur officia veritatis.
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Laborum voluptatem similique pariatur sunt, eius
+                      asperiores error dolores explicabo consequatur sit dolorem
+                      repudiandae in delectus quam cum. Perferendis aspernatur
+                      officia veritatis.
                     </p>
                   </div>
                 </div>
@@ -75,11 +89,10 @@ class IdeaDetailsPage extends Component {
                   <div className="media-body">
                     <h5 className="mt-0">User 2</h5>
                     <p>
-                      Lorem ipsum dolor, sit amet consectetur adipisicing
-                      elit. Quo, ipsam tempore dolore perferendis saepe
-                      eaque molestiae corrupti, fugiat laudantium omnis
-                      dicta velit quidem? Ipsa quam tenetur at voluptatibus
-                      ipsam?
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                      Quo, ipsam tempore dolore perferendis saepe eaque
+                      molestiae corrupti, fugiat laudantium omnis dicta velit
+                      quidem? Ipsa quam tenetur at voluptatibus ipsam?
                     </p>
                   </div>
                 </div>
@@ -113,11 +126,6 @@ const IdeaDetailsReactions = styled.div`
 `;
 
 export default connect(
-  ({ ideas: { list, loading } }) => {
-    return {
-      list,
-      loading,
-    };
-  },
-  ideasActions
+  ({ idea }) => ({ idea }),
+  ideasActions,
 )(IdeaDetailsPage);

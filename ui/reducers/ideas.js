@@ -1,5 +1,3 @@
-import ideasData from '../mocks/ideasData.json';
-
 const initialState = {
   loading: false,
   list: []
@@ -24,11 +22,9 @@ const ideasReducer = (state = initialState, action) => {
           description: idea.description,
           userName: idea.userName,
           commentsCount: idea.commentsCount,
-          reactions: {
-            likes: idea.likes || 0,
-            dislikes: idea.dislikes || 0,
-            loading: false,
-          },
+          likes: idea.likes || 0,
+          dislikes: idea.dislikes || 0,
+          reactionsLoading: false,
         })),
       };
     case 'ADD_LIKE_TO_IDEA_ATTEMPT':
@@ -39,7 +35,7 @@ const ideasReducer = (state = initialState, action) => {
           ...list.slice(0, index),
           {
             ...list[index],
-            reactions: { ...list[index].reactions, loading: true },
+            reactionsLoading: true,
           },
           ...list.slice(index + 1),
         ],
@@ -53,7 +49,9 @@ const ideasReducer = (state = initialState, action) => {
           ...list.slice(0, index),
           {
             ...list[index],
-            reactions: { dislikes: content.dislikes, likes: content.likes, loading: false },
+            dislikes: content.dislikes,
+            likes: content.likes,
+            reactionsLoading: false,
           },
           ...list.slice(index + 1),
         ],
@@ -67,7 +65,7 @@ const ideasReducer = (state = initialState, action) => {
           ...list.slice(0, index),
           {
             ...list[index],
-            reactions: { ...list[index].reactions, loading: true },
+            reactionsLoading: true,
           },
           ...list.slice(index + 1),
         ],
@@ -81,11 +79,9 @@ const ideasReducer = (state = initialState, action) => {
           ...list.slice(0, index),
           {
             ...list[index],
-            reactions: {
-              likes: content.likes,
-              dislikes: content.dislikes,
-              loading: false,
-            },
+            likes: content.likes,
+            dislikes: content.dislikes,
+            reactionsLoading: false,
           },
           ...list.slice(index + 1),
         ],

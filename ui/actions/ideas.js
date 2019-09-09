@@ -51,6 +51,19 @@ const getIdeas = () => {
   };
 };
 
+const getIdea = (id) => dispatch => {
+  dispatch({
+    type: 'GET_IDEA_ATTEMPT'
+  });
+
+  api.getIdea(id).then(({ data }) => {
+    dispatch({
+      type: 'GET_IDEA_SUCCESS',
+      content: data
+    })
+  });
+}
+
 const createIdea = (fields, successRedirect) => {
   return dispatch => {
     dispatch({
@@ -72,4 +85,5 @@ export default {
   addDislikeToIdea,
   createIdea,
   getIdeas,
+  getIdea,
 };

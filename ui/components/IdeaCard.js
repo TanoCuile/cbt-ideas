@@ -13,7 +13,9 @@ class IdeaCard extends Component {
       title,
       userName,
       commentsCount,
-      reactions
+      likes,
+      dislikes,
+      reactionsLoading
     } = this.props;
 
     return (
@@ -26,7 +28,14 @@ class IdeaCard extends Component {
           </IdeaCardInfo>
         </IdeaCardTitle>
         <IdeaCardReactions>
-          <IdeaReactions {...reactions} {...this.props} ideaId={id} />
+          <IdeaReactions
+            ideaId={id}
+            likes={likes}
+            dislikes={dislikes}
+            loading={reactionsLoading}
+            {...this.props}
+            ideaId={id}
+          />
         </IdeaCardReactions>
       </IdeaCardWrapper>
     );
