@@ -37,6 +37,13 @@ const getAllIdeas = () => {
   });
 };
 
+const getIdea = (id) => {
+  return Axios({
+    method: 'GET',
+    url: `/api/ideas/${id}`
+  });
+}
+
 const getIdeaComments = ideaId => {
   if (!ideaId) return null;
 
@@ -70,73 +77,50 @@ export default {
   getIdeaComments,
   saveComment,
   getUserInfo,
+  getIdea,
 };
 
-function testAPI() {
-  let ideaId;
-  authUser();
-  createIdea({
-    title: 'Blah1',
-    description: 'BLAH BLAH1',
-    likes: 0,
-    dislikes: 0,
-    owner: '1',
-    usersWhoLiked: [],
-    usersWhoDisliked: [],
-  })
-    .then(resp => {
-      ideaId = resp.data.id;
-    })
-    .then(() => getAllIdeas())
-    .then(resp => {})
-    .then(() => likeIdea(ideaId))
-    .then(resp => {
-      console.log(resp);
-    })
-    .then(() => dislikeIdea(ideaId))
-    .then(resp => {
-      console.log(resp);
-    })
-    .then(() =>
-      saveComment({
-        ideaId,
-        commentData: {
-          message: 'Super',
-          ideaId: '1',
-          userId: '1',
-          mentionedUsers: [],
-        },
-      }),
-    )
-    .then(resp => {
-      console.log(resp);
-    })
-    .then(() => getIdeaComments(ideaId))
-    .then(resp => {
-      console.log(resp);
-    });
-}
-function authUser() {
-  const token = getTockenFromQuery();
-  if (token) {
-    const exdays = 1;
-    const cookieName = 'ct_tok';
-    const currentDate = new Date();
-    currentDate.setTime(currentDate.getTime() + exdays * 24 * 60 * 60 * 1000);
-    const expires = 'expires=' + currentDate.toUTCString();
-    document.cookie = cookieName + '=' + token + ';' + expires + ';path=/';
-  }
-}
-
-function getTockenFromQuery() {
-  const query = window.location.href.split('?')[1];
-  if (query) {
-    const queryParams = query.split('&').reduce((total, piece) => {
-      const [key, value] = piece.split('=');
-      total[key] = value;
-      return total;
-    }, {});
-
-    return queryParams.ct_tok;
-  }
-}
+// function testAPI() {
+//   let ideaId;
+//   authUser();
+//   createIdea({
+//     title: 'Blah1',
+//     description: 'BLAH BLAH1',
+//     likes: 0,
+//     dislikes: 0,
+//     owner: '1',
+//     usersWhoLiked: [],
+//     usersWhoDisliked: [],
+//   })
+//     .then(resp => {
+//       ideaId = resp.data.id;
+//     })
+//     .then(() => getAllIdeas())
+//     .then(resp => {})
+//     .then(() => likeIdea(ideaId))
+//     .then(resp => {
+//       console.log(resp);
+//     })
+//     .then(() => dislikeIdea(ideaId))
+//     .then(resp => {
+//       console.log(resp);
+//     })
+//     .then(() =>
+//       saveComment({
+//         ideaId,
+//         commentData: {
+//           message: 'Super',
+//           ideaId: '1',
+//           userId: '1',
+//           mensionedUsers: [],
+//         },
+//       }),
+//     )
+//     .then(resp => {
+//       console.log(resp);
+//     })
+//     .then(() => getIdeaComments(ideaId))
+//     .then(resp => {
+//       console.log(resp);
+//     });
+// }

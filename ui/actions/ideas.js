@@ -51,6 +51,45 @@ const getIdeas = () => {
   };
 };
 
+const getIdea = id => dispatch => {
+  dispatch({
+    type: 'GET_IDEA_ATTEMPT',
+  });
+
+  api.getIdea(id).then(({ data }) => {
+    dispatch({
+      type: 'GET_IDEA_SUCCESS',
+      content: data,
+    });
+  });
+};
+
+const getIdeaComments = id => dispatch => {
+  dispatch({
+    type: 'GET_IDEA_COMMENTS_ATTEMPT',
+  });
+
+  api.getIdeaComments(id).then(({ data }) => {
+    dispatch({
+      type: 'GET_IDEA_COMMENTS_SUCCESS',
+      content: data,
+    });
+  });
+};
+
+const createComment = ({ ideaId, commentData }) => dispatch => {
+  dispatch({
+    type: 'CREATE_IDEA_COMMENT_ATTEMPT',
+  });
+
+  api.saveComment({ ideaId, commentData }).then(({ data }) => {
+    dispatch({
+      type: 'CREATE_IDEA_COMMENT_SUCCESS',
+      content: data,
+    });
+  });
+}
+
 const createIdea = (fields, successRedirect) => {
   return dispatch => {
     dispatch({
@@ -72,4 +111,7 @@ export default {
   addDislikeToIdea,
   createIdea,
   getIdeas,
+  getIdea,
+  getIdeaComments,
+  createComment,
 };
