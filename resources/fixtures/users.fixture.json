@@ -3,15 +3,15 @@
     "id": "5d7212fff6d77c00a53370b9",
     "name": "Ivan",
     "token": "opop",
-    "email": "i@van.com",
-    "role": "ARRANGER",
+    "email": "serhii.shvets@travelport.com",
+    "role": "ADMIN",
     "company": "Main"
   },
   {
     "id": "5d7212371ad4800095ae893e",
     "name": "Dvan",
     "token": "zxcv",
-    "email": "D@van.com",
+    "email": "strifinder@gmail.com",
     "role": "ARRANGER",
     "company": "Main"
   },
@@ -19,7 +19,7 @@
     "id": "5d723bd6ce437d0011484e13",
     "name": "Tvan",
     "token": "abcd",
-    "email": "t@van.com",
+    "email": "sshvets@n-ix.com",
     "role": "ARRANGER",
     "company": "Main"
   }

@@ -1,7 +1,8 @@
 import { Entity, ObjectIdColumn, ObjectID, Column } from 'typeorm';
+import { UserRolesEnum } from '../../user/interfaces/user-roles.enum';
 
 @Entity({
-  name: 'users'
+  name: 'users',
 })
 export class User {
   @ObjectIdColumn()
@@ -25,7 +26,7 @@ export class User {
   email: string;
 
   @Column()
-  role: string;
+  role: UserRolesEnum;
 
   @Column()
   company: string;

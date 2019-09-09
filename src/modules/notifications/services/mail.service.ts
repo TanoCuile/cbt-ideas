@@ -1,5 +1,6 @@
-import { Injectable } from "@nestjs/common";
-import { createTransport, Transporter } from "nodemailer";
+import { Injectable } from '@nestjs/common';
+import { createTransport, Transporter } from 'nodemailer';
+import { DEFAULT_IDEAS_EMAIL } from 'src/constants';
 
 @Injectable()
 export class MailService {
@@ -8,15 +9,21 @@ export class MailService {
   constructor() {
     this.transporter = createTransport({
       host: 'smtp',
-      port: 25
+      port: 25,
     });
   }
 
   /** @todo use passed email */
   async send(to: string, subject: string, text: string) {
+    console.log('>>>>>>', {
+      from: DEFAULT_IDEAS_EMAIL,
+      to,
+      subject,
+      text,
+    });
     return this.transporter.sendMail({
-      from: 'ideas@cbt.com',
-      to: 'pixog@be-breathtaking.net',
+      from: DEFAULT_IDEAS_EMAIL,
+      to,
       subject,
       text,
     });

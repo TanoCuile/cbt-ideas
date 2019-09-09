@@ -6,9 +6,17 @@ import { CommentsModule } from './modules/comments/comments.module';
 import { DbModule } from './modules/db/db.module';
 import { WebService } from './modules/web/services/web.service';
 import { FixturesModule } from './modules/fixtures/fixtures.module';
+import { NotificationModule } from './modules/notifications/notification.module';
 
 @Module({
-  imports: [UserModule, IdeasModule, CommentsModule, DbModule, FixturesModule],
+  imports: [
+    UserModule,
+    IdeasModule,
+    CommentsModule,
+    DbModule,
+    FixturesModule,
+    NotificationModule,
+  ],
   controllers: [WebController],
   providers: [WebService],
 })

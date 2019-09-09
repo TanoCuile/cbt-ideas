@@ -22,7 +22,7 @@ export class CommentsController {
 
   @Post('/:idea_id')
   async create(
-    @Param() ideaId: string,
+    @Param('idea_id') ideaId: string,
     @Body() comment: CommentInterface,
     @Req() req: Request,
   ) {
