@@ -9,7 +9,7 @@ export class Comment implements CommentInterface {
   _id: ObjectID;
 
   get id(): string | undefined {
-    return this._id.toString();
+    return this._id ? this._id.toString() : undefined;
   }
 
   set id(id: string) {
@@ -26,5 +26,8 @@ export class Comment implements CommentInterface {
   userId: string;
 
   @Column()
-  mensionedUsers: string[];
+  mentionedUsers: string[];
+
+  @Column()
+  parentCommentId: string;
 }
