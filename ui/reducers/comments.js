@@ -36,7 +36,7 @@ const commentsReducer = (state = initialState, action) => {
       const newListState = [...state.list];
       newListState.push({
         ...state.list[0],
-        message: content.message,
+        ...content
       });
 
       return {

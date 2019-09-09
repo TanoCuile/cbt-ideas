@@ -3,17 +3,21 @@ import { connect } from 'react-redux';
 
 import ideasActions from '../actions/ideas';
 
-const Comment = ({message, userName}) => (
-  <div className="media">
-    <img
-      style={{ width: '64px', height: '64px' }}
-      src="https://res.cloudinary.com/dq7aojv62/image/upload/v1567757889/user_cutuu3.png"
-      alt=""
-      className="mr-3"
-    />
-    <div className="media-body">
-      <h5 className="mt-0">{ userName || 'User' }</h5>
-      <p>{ message }</p>
+const Comment = ({ message, user }) => (
+  <div className="card" style={{marginBottom: '15px'}}>
+    <div className="card-body">
+      <div className="media">
+        <img
+          style={{ width: '64px', height: '64px' }}
+          src="https://res.cloudinary.com/dq7aojv62/image/upload/v1567757889/user_cutuu3.png"
+          alt=""
+          className="mr-3"
+        />
+        <div className="media-body">
+          <h5 className="mt-0">{user.name || 'User'}</h5>
+          <p>{message}</p>
+        </div>
+      </div>
     </div>
   </div>
 );
