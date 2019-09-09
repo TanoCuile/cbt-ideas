@@ -34,6 +34,7 @@ export class CommentsSubscriber implements EntitySubscriberInterface<Comment> {
   async afterInsert(event: InsertEvent<Comment>) {
     const comment = event.entity;
     const idea = await this.ideasDBService.findById(comment.ideaId);
+    console.log(comment)
     const user = await this.usersDBService.findById(idea.owner);
 
     return await this.mailer.send(

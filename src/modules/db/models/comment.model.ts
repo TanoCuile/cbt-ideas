@@ -1,4 +1,4 @@
-import { Entity, ObjectIdColumn, ObjectID, Column } from 'typeorm';
+import { Entity, ObjectIdColumn, ObjectID, Column, CreateDateColumn } from 'typeorm';
 import { CommentInterface } from '../../comments/interfaces/comment.interface';
 
 @Entity({
@@ -9,12 +9,15 @@ export class Comment implements CommentInterface {
   _id: ObjectID;
 
   get id(): string | undefined {
-    return this._id.toString();
+    return this._id ? this._id.toString() : undefined;
   }
 
   set id(id: string) {
     this._id = id as any;
   }
+
+  @CreateDateColumn({ type: 'timestamp' })
+  createdAt: Date;
 
   @Column()
   message: string;
@@ -26,5 +29,8 @@ export class Comment implements CommentInterface {
   userId: string;
 
   @Column()
-  mensionedUsers: string[];
+  mentionedUsers: string[];
+
+  @Column()
+  parentCommentId: string;
 }

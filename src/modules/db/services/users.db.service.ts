@@ -24,9 +24,9 @@ export class UsersDBService implements UserDBServiceInterface {
   ): Promise<User[]> {
     if (criteria.id) {
       if (Array.isArray(criteria.id)) {
-        criteria._id = { $in: criteria.id };
+        criteria._id = { $in: criteria.id.map((id) => new ObjectID(id)) };
       } else {
-        criteria._id = criteria.id;
+        criteria._id = new ObjectID(criteria.id);
       }
       delete criteria.id;
     }

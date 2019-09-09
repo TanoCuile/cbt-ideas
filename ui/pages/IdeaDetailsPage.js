@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import { connect } from 'react-redux';
@@ -6,25 +6,38 @@ import { connect } from 'react-redux';
 import ideasActions from '../actions/ideas';
 
 import IdeaReactions from '../components/IdeaReactions';
-
+import IdeaComments from '../components/IdeaComments';
 
 class IdeaDetailsPage extends Component {
-
   componentDidMount() {
-    this.props.getIdeas();
+    const {
+      match: {
+        params: { id },
+      },
+    } = this.props;
+    this.props.getIdea(id);
   }
 
   render() {
-    const { list, loading, match: { params } } = this.props;
+    const {
+      idea,
+      match: { params },
+    } = this.props;
 
-    if (loading) return <i className="fas fa-spinner fa-pulse" />;
-    const idea = list.find(idea => idea.id === params.id)
+    if (idea.loading) return <i className="fas fa-spinner fa-pulse" />;
 
     if (!idea) {
-      return (<h1>Id With id {params.id} not found!</h1>);
+      return <h1>Idea With id {params.id} not found!</h1>;
     }
 
-    const { id, title, userName, description, reactions } = idea;
+    const {
+      id,
+      title,
+      userName,
+      description,
+      likes,
+      dislikes,
+    } = idea;
 
     return (
       <IdeaDetailsWrapper>
@@ -38,49 +51,17 @@ class IdeaDetailsPage extends Component {
               <div className="card-text">
                 {description}
                 <IdeaDetailsReactions>
-                  <IdeaReactions {...reactions} {...this.props} ideaId={id} />
+                  <IdeaReactions
+                    ideaId={id}
+                    likes={likes}
+                    dislikes={dislikes}
+                    loading={false} // disable loading logic on reaction cause we set loading on all page in ideaReducer
+                    {...this.props}
+                  />
                 </IdeaDetailsReactions>
               </div>
               <hr />
-              <div className="comments" style={{ margin: '15px' }}>
-                <div className="media">
-                  <img
-                    style={{ width: '64px', height: '64px' }}
-                    src="https://res.cloudinary.com/dq7aojv62/image/upload/v1567757889/user_cutuu3.png"
-                    alt=""
-                    className="mr-3"
-                  />
-                  <div className="media-body">
-                    <h5 className="mt-0">User 1</h5>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Laborum voluptatem similique pariatur sunt, eius
-                      asperiores error dolores explicabo consequatur sit dolorem
-                      repudiandae in delectus quam cum. Perferendis aspernatur
-                      officia veritatis.
-                    </p>
-
-                    <div className="media mt-3">
-                      <img
-                        style={{ width: '64px', height: '64px' }}
-                        src="https://res.cloudinary.com/dq7aojv62/image/upload/v1567757889/user_cutuu3.png"
-                        alt=""
-                        className="mr-3"
-                      />
-                      <div className="media-body">
-                        <h5 className="mt-0">User 2</h5>
-                        <p>
-                          Lorem ipsum dolor, sit amet consectetur adipisicing
-                          elit. Quo, ipsam tempore dolore perferendis saepe
-                          eaque molestiae corrupti, fugiat laudantium omnis
-                          dicta velit quidem? Ipsa quam tenetur at voluptatibus
-                          ipsam?
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <IdeaComments ideaId={id} />
             </div>
           </CustomCard>
         </IdeaDetailsInner>
@@ -110,11 +91,6 @@ const IdeaDetailsReactions = styled.div`
 `;
 
 export default connect(
-  ({ ideas: { list, loading } }) => {
-    return {
-      list,
-      loading,
-    };
-  },
-  ideasActions
+  ({ idea }) => ({ idea }),
+  ideasActions,
 )(IdeaDetailsPage);

@@ -9,13 +9,15 @@ import {
   Req,
   UnauthorizedException,
 } from '@nestjs/common';
+import { ApiCreatedResponse, ApiResponse } from '@nestjs/swagger';
 
 import { IdeasService } from '../services/ideas.service';
-import { CreateIdeaRequest } from '../interfaces/createIdea.interface';
 import { AuthGuard } from '../../../guards/auth.guard';
 import { UserAuthService } from '../../user/services/user.auth.service';
 import { Request } from 'express';
 import { IdeaInterface } from '../interfaces/idea.interface';
+import { IdeaCreateDTO } from '../dto/idea-create.dto';
+import { IdeaResponseDTO } from '../dto/idea-response.dto';
 
 @Controller('api/ideas')
 @UseGuards(AuthGuard)
@@ -26,16 +28,20 @@ export class IdeasController {
   ) {}
 
   @Post()
-  async create(@Body() idea: CreateIdeaRequest, @Req() req: Request) {
+  @ApiCreatedResponse({ type: IdeaResponseDTO })
+  async create(@Body() idea: IdeaCreateDTO, @Req() req: Request) {
     const user = await this.userAuthService.getUserFromRequest(req);
     if (user) {
-      const response = await this.ideasService.getResponseFromIdeas([await this.ideasService.create(idea, user.id)]);
+      const response = await this.ideasService.getResponseFromIdeas([
+        await this.ideasService.create(idea, user.id),
+      ]);
       return response[0];
     }
     throw new UnauthorizedException();
   }
 
   @Get()
+  @ApiResponse({ status: 200, type: IdeaResponseDTO, isArray: true })
   async getAll() {
     return await this.ideasService.getResponseFromIdeas(
       await this.ideasService.getAll(),
@@ -43,6 +49,7 @@ export class IdeasController {
   }
 
   @Get('/:id')
+  @ApiResponse({ status: 200, type: IdeaResponseDTO, isArray: true })
   async get(@Param('id') id: string) {
     const response = await this.ideasService.getResponseFromIdeas([
       await this.ideasService.getById(id),
@@ -51,6 +58,7 @@ export class IdeasController {
   }
 
   @Post('/:id/like')
+  @ApiCreatedResponse({ type: IdeaResponseDTO })
   async like(@Param('id') id: string, @Req() req: Request) {
     const user = await this.userAuthService.getUserFromRequest(req);
     if (user) {
@@ -61,6 +69,7 @@ export class IdeasController {
   }
 
   @Post('/:id/dislike')
+  @ApiCreatedResponse({ type: IdeaResponseDTO })
   async dislike(@Param('id') id: string, @Req() req: Request) {
     const user = await this.userAuthService.getUserFromRequest(req);
     if (user) {

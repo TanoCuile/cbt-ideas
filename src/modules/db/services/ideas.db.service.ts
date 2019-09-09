@@ -4,7 +4,6 @@ import { Idea } from '../models/idea.model';
 import { IdeasDBServiceInterface } from '../../ideas/interfaces/ideas.db.service.interface';
 import { IdeaInterface } from '../../ideas/interfaces/idea.interface';
 import { Injectable, Inject } from '@nestjs/common';
-import { CreateIdeaRequest } from 'src/modules/ideas/interfaces/createIdea.interface';
 
 @Injectable()
 export class IdeasDBService implements IdeasDBServiceInterface {
@@ -12,7 +11,7 @@ export class IdeasDBService implements IdeasDBServiceInterface {
     @Inject('IDEAS_REPOSITORY') protected ideasRepository: Repository<Idea>,
   ) {}
 
-  create(idea: CreateIdeaRequest): Promise<IdeaInterface> {
+  create(idea: IdeaInterface): Promise<IdeaInterface> {
     return this.ideasRepository.save(this.ideasRepository.create(idea));
   }
 
@@ -33,7 +32,7 @@ export class IdeasDBService implements IdeasDBServiceInterface {
     const idea = await this.ideasRepository.findOne({
       where: { _id: String(id).length > 10 ? new ObjectID(id) : id },
     });
-    console.log(idea, { _id: id });
+
     return idea;
   }
 }

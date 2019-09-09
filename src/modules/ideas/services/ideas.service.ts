@@ -1,9 +1,9 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { IdeaInterface } from '../interfaces/idea.interface';
-import { CreateIdeaRequest } from '../interfaces/createIdea.interface';
 import { IdeasDBServiceInterface } from '../interfaces/ideas.db.service.interface';
 import { UserAuthService } from '../../user/services/user.auth.service';
 import { DEFAULT_USER_ID } from '../../../constants';
+import { IdeaCreateDTO } from '../dto/idea-create.dto';
 
 @Injectable()
 export class IdeasService {
@@ -12,7 +12,7 @@ export class IdeasService {
     @Inject(UserAuthService) protected userAuthService: UserAuthService,
   ) {}
 
-  async create(item: CreateIdeaRequest, userId: string = DEFAULT_USER_ID) {
+  async create(item: IdeaCreateDTO, userId: string = DEFAULT_USER_ID) {
     const idea = await this.dbService.create(item);
     idea.owner = userId;
     this.setupIdeaFields(idea);
@@ -33,6 +33,7 @@ export class IdeasService {
         };
       },
     );
+
     const ideasResponse = ideas.map(idea => {
       const id = idea.id;
       delete (idea as any)._id;

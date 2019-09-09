@@ -1,7 +1,10 @@
-export interface CommentInterface {
+
+export class CommentInterface {
   id: string;
   message: string;
   ideaId: string;
   userId: string;
-  mensionedUsers: string[];
+  mentionedUsers: string[];
+  parentCommentId?: string;
+  createdAt: Date;
 }
