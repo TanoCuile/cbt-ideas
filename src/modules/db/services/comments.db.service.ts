@@ -3,7 +3,6 @@ import { ObjectID } from 'mongodb';
 import { Injectable, Inject } from '@nestjs/common';
 import { Comment } from '../models/comment.model';
 import { CommentDBServiceInterface } from '../../comments/interfaces/comment.db.service.interface';
-import { CommentInterface } from '../../comments/interfaces/comment.interface';
 
 @Injectable()
 export class CommentsDBService implements CommentDBServiceInterface {

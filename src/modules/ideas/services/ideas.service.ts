@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { IdeaInterface } from '../interfaces/idea.interface';
-import { CreateIdeaRequest } from '../interfaces/createIdea.interface';
+import { CreateIdeaRequest } from '../dto/createIdea.dto';
 import { IdeasDBServiceInterface } from '../interfaces/ideas.db.service.interface';
 import { UserAuthService } from '../../user/services/user.auth.service';
 import { DEFAULT_USER_ID } from '../../../constants';
