@@ -23,7 +23,8 @@
     "docker:build": "docker-compose -f ./docker/docker-compose.yml build",
     "docker:up": "docker-compose -f ./docker/docker-compose.yml up",
     "docker:rebuild": "npm run docker:down && npm run docker:build && npm run docker:up",
-    "docker:restart": "npm run docker:down && npm run docker:up"
+    "docker:restart": "npm run docker:down && npm run docker:up",
+    "add:mail:user": "docker run --rm   -e MAIL_USER=admin@cbtmp.id   -e MAIL_PASS=123   -ti tvial/docker-mailserver:latest   /bin/sh -c 'echo \"$MAIL_USER|$(doveadm pw -s SHA512-CRYPT -u $MAIL_USER -p $MAIL_PASS)\"' >> mail_server/config/postfix-accounts.cf"
   },
   "dependencies": {
     "@nestjs/common": "^6.0.0",

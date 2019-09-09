@@ -32,8 +32,6 @@ export class MailService {
           text,
         });
 
-        console.log('>>>', info);
-
         return info;
       } catch (error) {
         throw new Error(
