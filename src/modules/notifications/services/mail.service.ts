@@ -24,6 +24,7 @@ export class MailService {
   async send(to: string, subject: string, text: string) {
     try {
       await this.transport.verify();
+
       try {
         const info = await this.transport.sendMail({
           from: DEFAULT_IDEAS_EMAIL,
