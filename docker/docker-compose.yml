@@ -15,7 +15,6 @@ services:
 
   smtp:
     image: tvial/docker-mailserver:latest
-    image: tvial/docker-mailserver:latest
     hostname: mail
     domainname: domain.com
     container_name: mail

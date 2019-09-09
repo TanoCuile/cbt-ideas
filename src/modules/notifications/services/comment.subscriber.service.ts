@@ -34,17 +34,20 @@ export class CommentsSubscriber implements EntitySubscriberInterface<Comment> {
   async afterInsert(event: InsertEvent<Comment>) {
     const comment = event.entity;
     const idea = await this.ideasDBService.findById(comment.ideaId);
-    console.log(comment)
     const user = await this.usersDBService.findById(idea.owner);
 
-    return await this.mailer.send(
-      user.email,
-      'New comment for idea: ' + idea.title,
-      await this.templateService.getMailBody('new-comment', {
-        idea,
-        comment,
-        ideaLink: `${DEFAULT_DOMAIN}/idea/${idea.id}`,
-      }),
-    );
+    try {
+      return await this.mailer.send(
+        user.email,
+        'New comment for idea: ' + idea.title,
+        await this.templateService.getMailBody('new-comment', {
+          idea,
+          comment,
+          ideaLink: `${DEFAULT_DOMAIN}/idea/${idea.id}`,
+        }),
+      );
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

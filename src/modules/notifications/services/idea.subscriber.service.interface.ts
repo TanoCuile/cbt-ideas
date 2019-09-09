@@ -37,14 +37,16 @@ export class IdeasSubscriber implements EntitySubscriberInterface<Idea> {
 
     return Promise.all(
       admins.map(async admin =>
-        this.mailer.send(
-          admin.email,
-          'New idea: ' + idea.title,
-          await this.templateService.getMailBody('new-idea', {
-            idea,
-            ideaLink: `${DEFAULT_DOMAIN}/idea/${idea.id}`,
-          }),
-        ),
+        this.mailer
+          .send(
+            admin.email,
+            'New idea: ' + idea.title,
+            await this.templateService.getMailBody('new-idea', {
+              idea,
+              ideaLink: `${DEFAULT_DOMAIN}/idea/${idea.id}`,
+            }),
+          )
+          .catch(console.error),
       ),
     );
   }
