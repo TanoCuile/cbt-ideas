@@ -20,6 +20,7 @@ export class IdeasService {
   }
 
   async getResponseFromIdeas(ideas: IdeaInterface[]) {
+    console.log(this.getUserIdsFromIdeas(ideas));
     const users = (await this.userAuthService.getUsersInfo(
       this.getUserIdsFromIdeas(ideas),
     )).reduce(
@@ -33,6 +34,7 @@ export class IdeasService {
         };
       },
     );
+    console.log(users);
     const ideasResponse = ideas.map(idea => {
       const id = idea.id;
       delete (idea as any)._id;

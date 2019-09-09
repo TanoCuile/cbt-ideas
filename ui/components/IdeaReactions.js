@@ -46,6 +46,10 @@ const ReactionsButton = styled.button`
   display: flex;
   align-items: center;
 
+  :focus {
+    outline: none;
+  }
+
   :hover {
     color: ${({ theme, color }) => theme[color]};
   }

@@ -24,6 +24,8 @@ export class UserAuthService {
   async getUsersInfo(
     userIds: string[],
   ): Promise<Array<{ name: string; id: string }>> {
+    const user = await this.userDbService.getByCriteria({ id: userIds });
+    console.log(user);
     return this.getUserInfo(
       await this.userDbService.getByCriteria({ id: userIds }),
     );

@@ -35,7 +35,7 @@ const Nav = () => {
       <NavInner>
         <NavItem>
           <img
-            src="https://res.cloudinary.com/dq7aojv62/image/upload/v1567595469/cbtIdeas-logo_bpbwxj.png"
+            src="https://res.cloudinary.com/dq7aojv62/image/upload/v1568014137/2213673127_65f407e3-cd6a-4b53-9482-17d7512dea12_tawwet.png"
             alt="logo"
           />
         </NavItem>

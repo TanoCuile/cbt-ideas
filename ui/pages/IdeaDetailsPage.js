@@ -38,7 +38,11 @@ class IdeaDetailsPage extends Component {
               <div className="card-text">
                 {description}
                 <IdeaDetailsReactions>
-                  <IdeaReactions {...reactions} {...this.props} ideaId={id} />
+                  <IdeaReactions
+                    {...reactions}
+                    {...this.props}
+                    ideaId={id}
+                  />
                 </IdeaDetailsReactions>
               </div>
               <hr />
@@ -53,31 +57,30 @@ class IdeaDetailsPage extends Component {
                   <div className="media-body">
                     <h5 className="mt-0">User 1</h5>
                     <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Laborum voluptatem similique pariatur sunt, eius
-                      asperiores error dolores explicabo consequatur sit dolorem
-                      repudiandae in delectus quam cum. Perferendis aspernatur
-                      officia veritatis.
+                      Lorem ipsum dolor sit amet consectetur adipisicing
+                      elit. Laborum voluptatem similique pariatur sunt, eius
+                      asperiores error dolores explicabo consequatur sit
+                      dolorem repudiandae in delectus quam cum. Perferendis
+                      aspernatur officia veritatis.
                     </p>
-
-                    <div className="media mt-3">
-                      <img
-                        style={{ width: '64px', height: '64px' }}
-                        src="https://res.cloudinary.com/dq7aojv62/image/upload/v1567757889/user_cutuu3.png"
-                        alt=""
-                        className="mr-3"
-                      />
-                      <div className="media-body">
-                        <h5 className="mt-0">User 2</h5>
-                        <p>
-                          Lorem ipsum dolor, sit amet consectetur adipisicing
-                          elit. Quo, ipsam tempore dolore perferendis saepe
-                          eaque molestiae corrupti, fugiat laudantium omnis
-                          dicta velit quidem? Ipsa quam tenetur at voluptatibus
-                          ipsam?
-                        </p>
-                      </div>
-                    </div>
+                  </div>
+                </div>
+                <div className="media mt-3">
+                  <img
+                    style={{ width: '64px', height: '64px' }}
+                    src="https://res.cloudinary.com/dq7aojv62/image/upload/v1567757889/user_cutuu3.png"
+                    alt=""
+                    className="mr-3"
+                  />
+                  <div className="media-body">
+                    <h5 className="mt-0">User 2</h5>
+                    <p>
+                      Lorem ipsum dolor, sit amet consectetur adipisicing
+                      elit. Quo, ipsam tempore dolore perferendis saepe
+                      eaque molestiae corrupti, fugiat laudantium omnis
+                      dicta velit quidem? Ipsa quam tenetur at voluptatibus
+                      ipsam?
+                    </p>
                   </div>
                 </div>
               </div>
