@@ -13,16 +13,15 @@ services:
     ports:
         - 27017:27017
 
-  smtp:
+  mail:
     image: tvial/docker-mailserver:latest
     hostname: mail
     domainname: domain.com
     container_name: mail
     ports:
       - "25:25"
-      - "143:143"
       - "587:587"
-      - "993:993"
+      - "465:465"
     volumes:
       # - maildata:/var/mail
       # - mailstate:/var/mail-state
@@ -72,12 +71,12 @@ services:
       NODE_ENV: develop
     links:
       - database
-      - smtp
+      - mail
     ports:
      - "3006:3000"
 
 volumes:
   database:
   db_admin:
-  smtp:
+  mail:
   cbt_ideas:

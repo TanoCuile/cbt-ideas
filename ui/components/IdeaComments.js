@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import ideasActions from '../actions/ideas';
 
-const Comment = ({ message, user, createdAt }) => {
+const Comment = ({ message, userName, createdAt }) => {
   const postingDate = new Date(createdAt).toLocaleDateString();
   return (
     <div className="card" style={{ marginBottom: '15px' }}>
@@ -16,7 +16,7 @@ const Comment = ({ message, user, createdAt }) => {
             className="mr-3"
           />
           <div className="media-body">
-            <h5 className="mt-0 mb-0">{user.name || 'User'}</h5>
+            <h5 className="mt-0 mb-0">{userName || 'User'}</h5>
             <p className="text-muted" style={{ fontSize: '0.85rem' }}>
               Created At: {postingDate}
             </p>
