@@ -4,10 +4,10 @@ import { DEFAULT_IDEAS_EMAIL } from 'src/constants';
 
 @Injectable()
 export class MailService {
-  private transporter: Transporter;
+  private transport: Transporter;
 
   constructor() {
-    this.transporter = createTransport({
+    this.transport = createTransport({
       host: 'smtp',
       port: 25,
     });
@@ -15,17 +15,28 @@ export class MailService {
 
   /** @todo use passed email */
   async send(to: string, subject: string, text: string) {
-    console.log('>>>>>>', {
-      from: DEFAULT_IDEAS_EMAIL,
-      to,
-      subject,
-      text,
-    });
-    return this.transporter.sendMail({
-      from: DEFAULT_IDEAS_EMAIL,
-      to,
-      subject,
-      text,
-    });
+    try {
+      await this.transport.verify();
+      try {
+        const info = await this.transport.sendMail({
+          from: DEFAULT_IDEAS_EMAIL,
+          to,
+          subject,
+          text,
+        });
+
+        console.log('>>>', info);
+
+        return info;
+      } catch (error) {
+        throw new Error(
+          JSON.stringify({ message: 'send_mail_error', data: error }),
+        );
+      }
+    } catch (error) {
+      throw new Error(
+        JSON.stringify({ message: 'transport_not_verified', data: error }),
+      );
+    }
   }
 }
