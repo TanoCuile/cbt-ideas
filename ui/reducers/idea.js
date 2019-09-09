@@ -1,5 +1,5 @@
 const initialState = {
-  loading: false
+  loading: true
 }
 
 const ideaReducer = (state = initialState, action) => {

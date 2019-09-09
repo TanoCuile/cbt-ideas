@@ -6,11 +6,14 @@ import { connect } from 'react-redux';
 import ideasActions from '../actions/ideas';
 
 import IdeaReactions from '../components/IdeaReactions';
+import IdeaComments from '../components/IdeaComments';
 
 class IdeaDetailsPage extends Component {
   componentDidMount() {
     const {
-      match: { params: { id } },
+      match: {
+        params: { id },
+      },
     } = this.props;
     this.props.getIdea(id);
   }
@@ -18,11 +21,10 @@ class IdeaDetailsPage extends Component {
   render() {
     const {
       idea,
-      loading,
       match: { params },
     } = this.props;
 
-    if (loading) return <i className="fas fa-spinner fa-pulse" />;
+    if (idea.loading) return <i className="fas fa-spinner fa-pulse" />;
 
     if (!idea) {
       return <h1>Idea With id {params.id} not found!</h1>;
@@ -35,7 +37,6 @@ class IdeaDetailsPage extends Component {
       description,
       likes,
       dislikes,
-      reactionsLoading,
     } = idea;
 
     return (
@@ -60,43 +61,7 @@ class IdeaDetailsPage extends Component {
                 </IdeaDetailsReactions>
               </div>
               <hr />
-              <div className="comments" style={{ margin: '15px' }}>
-                <div className="media">
-                  <img
-                    style={{ width: '64px', height: '64px' }}
-                    src="https://res.cloudinary.com/dq7aojv62/image/upload/v1567757889/user_cutuu3.png"
-                    alt=""
-                    className="mr-3"
-                  />
-                  <div className="media-body">
-                    <h5 className="mt-0">User 1</h5>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Laborum voluptatem similique pariatur sunt, eius
-                      asperiores error dolores explicabo consequatur sit dolorem
-                      repudiandae in delectus quam cum. Perferendis aspernatur
-                      officia veritatis.
-                    </p>
-                  </div>
-                </div>
-                <div className="media mt-3">
-                  <img
-                    style={{ width: '64px', height: '64px' }}
-                    src="https://res.cloudinary.com/dq7aojv62/image/upload/v1567757889/user_cutuu3.png"
-                    alt=""
-                    className="mr-3"
-                  />
-                  <div className="media-body">
-                    <h5 className="mt-0">User 2</h5>
-                    <p>
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                      Quo, ipsam tempore dolore perferendis saepe eaque
-                      molestiae corrupti, fugiat laudantium omnis dicta velit
-                      quidem? Ipsa quam tenetur at voluptatibus ipsam?
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <IdeaComments ideaId={id} />
             </div>
           </CustomCard>
         </IdeaDetailsInner>
