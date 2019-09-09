@@ -14,7 +14,32 @@ services:
         - 27017:27017
 
   smtp:
-    image: namshi/smtp
+    image: tvial/docker-mailserver:latest
+    image: tvial/docker-mailserver:latest
+    hostname: mail
+    domainname: domain.com
+    container_name: mail
+    ports:
+      - "25:25"
+      - "143:143"
+      - "587:587"
+      - "993:993"
+    volumes:
+      # - maildata:/var/mail
+      # - mailstate:/var/mail-state
+      - ../mail_server/config/:/tmp/docker-mailserver/
+    environment:
+      - ENABLE_SPAMASSASSIN=1
+      - ENABLE_CLAMAV=1
+      - ENABLE_FAIL2BAN=1
+      - ENABLE_POSTGREY=1
+      - ONE_DIR=1
+      - DMS_DEBUG=0
+      - MAIL_USER=admin@example.org
+      - MAIL_PASS=123
+    cap_add:
+      - NET_ADMIN
+      - SYS_PTRACE
 
   db_admin:
     build:
