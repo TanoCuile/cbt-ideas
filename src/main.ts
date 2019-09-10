@@ -5,6 +5,7 @@ import { AppModule } from './app.module';
 import { resolve } from 'path';
 import { FixturesProvider } from './modules/fixtures/providers/fixtures.provider';
 import * as cookieParser from 'cookie-parser';
+import { API_TITLE, API_DESCRIPTION } from './constants';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -15,11 +16,10 @@ async function bootstrap() {
   });
 
   const options = new DocumentBuilder()
-    .setTitle('CBT|TMP ideas')
-    .setDescription('CBT|TMP ideas forum')
+    .setTitle(API_TITLE)
+    .setDescription(API_DESCRIPTION)
     .setVersion('1.0')
     .addTag('idea')
-    .addTag('idea_mock')
     .build();
 
   const document = SwaggerModule.createDocument(app, options);
