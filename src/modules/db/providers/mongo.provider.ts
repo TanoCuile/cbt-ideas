@@ -11,7 +11,7 @@ export const mongoProvider = {
       type: 'mongodb',
       entities: [Idea, Comment, User],
       useNewUrlParser: true,
-      url: 'mongodb://database:27017/ideas',
+      url: 'mongodb://localhost:27017/ideas',
       // url: 'mongodb://root:example@db:27017'
       // host: 'db',
       // port: 27017,

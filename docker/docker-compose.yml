@@ -12,46 +12,22 @@ services:
       # - ../../temp/ideas_mongo_data/db:/data/db
     ports:
         - 27017:27017
-
-  mail:
-    image: tvial/docker-mailserver:latest
-    hostname: mail
-    domainname: domain.com
-    container_name: mail
-    ports:
-      - "25:25"
-      - "587:587"
-      - "465:465"
-    volumes:
-      # - maildata:/var/mail
-      # - mailstate:/var/mail-state
-      - ../mail_server/config/:/tmp/docker-mailserver/
-    environment:
-      - ENABLE_SPAMASSASSIN=1
-      - ENABLE_CLAMAV=1
-      - ENABLE_FAIL2BAN=1
-      - ENABLE_POSTGREY=1
-      - ONE_DIR=1
-      - DMS_DEBUG=0
-      - MAIL_USER=admin@example.org
-      - MAIL_PASS=123
-    cap_add:
-      - NET_ADMIN
-      - SYS_PTRACE
+    network_mode: "host"
 
   db_admin:
     build:
       context: ../db_admin
     environment:
       CONN_NAME: whatever
-      DB_HOST: database
+      DB_HOST: localhost
       DB_PORT: 27017
       # DB_USERNAME: root
       # DB_PASSWORD: example
     ports:
       - "3007:8082"
-    links:
-      - database
+    depends_on:
+      - "database"
+    network_mode: "host"
 
   cbt_ideas:
     # restart: always
@@ -67,16 +43,15 @@ services:
       - '../test:/srv/app/test'
       - '../static:/srv/app/static'
       - '../package.json:/srv/app/package.json'
-    environment:
-      NODE_ENV: develop
-    links:
-      - database
-      - mail
+    env_file:
+     - ../.env
     ports:
      - "3006:3000"
+    depends_on:
+      - "database"
+    network_mode: "host"
 
 volumes:
   database:
   db_admin:
-  mail:
   cbt_ideas:

@@ -5,8 +5,10 @@ import { AppModule } from './app.module';
 import { resolve } from 'path';
 import { FixturesProvider } from './modules/fixtures/providers/fixtures.provider';
 import * as cookieParser from 'cookie-parser';
-import passport = require("passport");
-import OAuth2Strategy = require("passport-oauth2");
+import * as passport from 'passport';
+import * as OAuth2Strategy from 'passport-oauth2';
+import { API_TITLE, API_DESCRIPTION } from './constants';
+import { Next } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -15,37 +17,50 @@ async function bootstrap() {
     extensions: ['js', 'css'],
     prefix: '/static',
   });
+  app.enableCors({ credentials: true, origin: true });
 
- passport.use(new OAuth2Strategy({
-    authorizationURL: 'http://localhost:3000/oauth/authorize',
-    tokenURL: 'http://localhost:3000/oauth/token',
-    clientID: 'LdX50fQfw49qFteOlcMdTaZXo_m2VLd6_ZJRv5IaeaE',
-    clientSecret: 'ZelIrIVazCtFTbdecSXDHeBYteiKiqZUwK9TfZRWzXk',
-    callbackURL: "http://localhost:3006/auth/ideas_forum/callback"
-  },
-  function(accessToken, refreshToken, profile, cb) {
-    console.log('------------', arguments);
-    return {};
-  }
-));
-app.getHttpAdapter().get('/auth/example',
-  passport.authenticate('oauth2'));
+  passport.use(
+    'oauth2',
+    new OAuth2Strategy(
+      {
+        authorizationURL: 'http://0.0.0.0:3100/dialog/authorize',
+        tokenURL: 'http://0.0.0.0:3100/oauth/token',
+        clientID: 'abc123',
+        clientSecret: 'ssh-secret',
+        callbackURL: 'http://0.0.0.0:3006/auth/ideas_forum/callback',
+      },
+      function(accessToken, refreshToken, profile, cb) {
+        console.log('---------', arguments);
+        return cb(null, {
+          id: '1',
+        });
+      },
+    ),
+  );
+  app.use(passport.initialize());
+  // app.use(passport.session());
+  app.getHttpAdapter().get('/auth', passport.authenticate('oauth2'));
 
-(app.getHttpAdapter() as any).get('/auth/ideas_forum/callback',
-  function() {
-    return passport.authenticate('oauth2', { failureRedirect: '/login' }).call(this, arguments[0], arguments[1], console.log)
-  },
-  function(req, res, next) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
+  (app.getHttpAdapter() as any).get(
+    '/auth/ideas_forum/callback',
+    passport.authenticate('oauth2', {
+      successRedirect: '/',
+      failureRedirect: '/login',
+    }),
+  );
+  passport.serializeUser(function(user, done) {
+    done(null, user);
+  });
+
+  passport.deserializeUser(function(user, done) {
+    done(null, user);
   });
 
   const options = new DocumentBuilder()
-    .setTitle('CBT|TMP ideas')
-    .setDescription('CBT|TMP ideas forum')
+    .setTitle(API_TITLE)
+    .setDescription(API_DESCRIPTION)
     .setVersion('1.0')
     .addTag('idea')
-    .addTag('idea_mock')
     .build();
 
   const document = SwaggerModule.createDocument(app, options);
@@ -61,6 +76,6 @@ app.getHttpAdapter().get('/auth/example',
     }
   }
 
-  await app.listen(3000);
+  await app.listen(3006);
 }
 bootstrap();
