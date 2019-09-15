@@ -34,11 +34,11 @@ export class OAuth2AuthStrategyService extends PassportStrategy(
     profile: any,
     verified: VerifyCallback,
   ) {
-    console.log('>>>', accessToken, refreshToken, profile, verified, arguments);
-    const user = { e: 2 }; // await this.authService.validateUser(username, password);
-    // if (!user) {
-    //   throw new UnauthorizedException();
-    // }
+    const user = await this.authService.registerTMPUser(
+      profile,
+      accessToken,
+      refreshToken,
+    );
     return verified(null, user);
   }
 }

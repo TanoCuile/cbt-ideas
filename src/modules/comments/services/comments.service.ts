@@ -1,19 +1,19 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { CommentInterface } from '../interfaces/comment.interface';
 import { CommentDBServiceInterface } from '../interfaces/comment.db.service.interface';
-import { UserAuthService } from 'src/modules/user/services/user.auth.service';
 import { CommentResponseDTO } from '../dtos/comment-response.dto';
+import { UserService } from 'src/modules/user/services/user.service';
 
 @Injectable()
 export class CommentsService {
   constructor(
     @Inject('CommentsDBService')
     protected commentsDbService: CommentDBServiceInterface,
-    @Inject(UserAuthService) protected userAuthService: UserAuthService,
+    @Inject('UserService') protected userService: UserService,
   ) {}
 
   async getResponseFromComments(comments: CommentInterface[]): Promise<CommentResponseDTO[]> {
-    const users = (await this.userAuthService.getUsersInfo(
+    const users = (await this.userService.getUsersInfo(
       this.getUserIdsFromIdeas(comments),
     )).reduce(
       (total, user) => {

@@ -13,23 +13,22 @@ import { ApiCreatedResponse, ApiResponse } from '@nestjs/swagger';
 import { Request } from 'express';
 
 import { IdeasService } from '../services/ideas.service';
-import { UserAuthService } from '../../user/services/user.auth.service';
 import { IdeaCreateDTO } from '../dto/idea-create.dto';
 import { IdeaResponseDTO } from '../dto/idea-response.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { UserInterface } from 'src/modules/user/interfaces/user.interface';
 
 @Controller('api/ideas')
 @UseGuards(AuthGuard('token'))
 export class IdeasController {
   constructor(
     @Inject(IdeasService) protected readonly ideasService: IdeasService,
-    @Inject(UserAuthService) protected userAuthService: UserAuthService,
   ) {}
 
   @Post()
   @ApiCreatedResponse({ type: IdeaResponseDTO })
   async create(@Body() idea: IdeaCreateDTO, @Req() req: Request) {
-    const user = await this.userAuthService.getUserFromRequest(req);
+    const user = req.user as UserInterface;
     if (user) {
       const response = await this.ideasService.getResponseFromIdeas([
         await this.ideasService.create(idea, user.id),
@@ -59,7 +58,7 @@ export class IdeasController {
   @Post('/:id/like')
   @ApiCreatedResponse({ type: IdeaResponseDTO })
   async like(@Param('id') id: string, @Req() req: Request) {
-    const user = await this.userAuthService.getUserFromRequest(req);
+    const user = req.user as UserInterface;
     if (user) {
       await this.ideasService.like(id, user.id);
     }
@@ -70,7 +69,7 @@ export class IdeasController {
   @Post('/:id/dislike')
   @ApiCreatedResponse({ type: IdeaResponseDTO })
   async dislike(@Param('id') id: string, @Req() req: Request) {
-    const user = await this.userAuthService.getUserFromRequest(req);
+    const user = req.user as UserInterface;
     if (user) {
       await this.ideasService.dislike(id, user.id);
     }

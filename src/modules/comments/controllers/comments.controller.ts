@@ -11,11 +11,12 @@ import {
 import { ApiCreatedResponse, ApiResponse } from '@nestjs/swagger';
 import { CommentsService } from '../services/comments.service';
 import { CommentInterface } from '../interfaces/comment.interface';
-import { UserAuthService } from '../../user/services/user.auth.service';
+import { UserAuthService } from '../../auth/services/user.auth.service';
 import { Request } from 'express';
 import { CommentResponseDTO } from '../dtos/comment-response.dto';
 import { CommentCreateDTO } from '../dtos/comment-create.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { UserInterface } from 'src/modules/user/interfaces/user.interface';
 
 @Controller('api/comments')
 @UseGuards(AuthGuard('token'))
@@ -23,7 +24,6 @@ export class CommentsController {
   constructor(
     @Inject(CommentsService)
     protected readonly commentsService: CommentsService,
-    @Inject(UserAuthService) protected userAuthService: UserAuthService,
   ) {}
 
   @Post('/:idea_id')
@@ -33,7 +33,7 @@ export class CommentsController {
     @Body() comment: CommentInterface,
     @Req() req: Request,
   ) {
-    const user = await this.userAuthService.getUserFromRequest(req);
+    const user = req.user as UserInterface;
     if (user) {
       comment.userId = user.id;
       const storedComment = await this.commentsService.create(ideaId, comment);

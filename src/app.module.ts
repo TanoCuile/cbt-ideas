@@ -7,12 +7,14 @@ import { FixturesModule } from './modules/fixtures/fixtures.module';
 import { NotificationModule } from './modules/notifications/notification.module';
 import { PassportModule } from '@nestjs/passport';
 import { WebModule } from './modules/web/web.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
     WebModule,
     PassportModule.register({ defaultStrategy: 'token' }),
     UserModule,
+    AuthModule,
     IdeasModule,
     CommentsModule,
     DbModule,

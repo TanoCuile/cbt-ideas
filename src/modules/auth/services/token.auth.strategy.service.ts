@@ -1,9 +1,7 @@
-// import Strategy from 'passport-unique-token';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException, Inject } from '@nestjs/common';
 import { UserAuthService } from './user.auth.service';
-import { Request } from 'express';
-import { CookieTokenStategy } from '../lib/cookie-token.stragegy';
+import { CookieTokenStategy } from '../strategies/cookie-token.stragegy';
 
 @Injectable()
 export class UniqueTockenAuthStrategyService extends PassportStrategy(
