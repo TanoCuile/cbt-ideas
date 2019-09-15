@@ -5,6 +5,10 @@ import { AppModule } from './app.module';
 import { resolve } from 'path';
 import { FixturesProvider } from './modules/fixtures/providers/fixtures.provider';
 import * as cookieParser from 'cookie-parser';
+import * as passport from 'passport';
+import * as OAuth2Strategy from 'passport-oauth2';
+import { API_TITLE, API_DESCRIPTION } from './constants';
+import { Next } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -13,13 +17,25 @@ async function bootstrap() {
     extensions: ['js', 'css'],
     prefix: '/static',
   });
+  app.enableCors({ credentials: true, origin: true });
+
+  // app.use(passport.initialize());
+  // app.use(passport.session());
+  // passport.serializeUser(function(user, done) {
+  //   console.log('Serialize', user);
+  //   done(null, user);
+  // });
+
+  // passport.deserializeUser(function(user, done) {
+  //   console.log('Deserialize', user);
+  //   done(null, user);
+  // });
 
   const options = new DocumentBuilder()
-    .setTitle('CBT|TMP ideas')
-    .setDescription('CBT|TMP ideas forum')
+    .setTitle(API_TITLE)
+    .setDescription(API_DESCRIPTION)
     .setVersion('1.0')
     .addTag('idea')
-    .addTag('idea_mock')
     .build();
 
   const document = SwaggerModule.createDocument(app, options);
@@ -35,6 +51,6 @@ async function bootstrap() {
     }
   }
 
-  await app.listen(3000);
+  await app.listen(3006);
 }
 bootstrap();

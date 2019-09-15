@@ -1,15 +1,15 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { IdeaInterface } from '../interfaces/idea.interface';
 import { IdeasDBServiceInterface } from '../interfaces/ideas.db.service.interface';
-import { UserAuthService } from '../../user/services/user.auth.service';
 import { DEFAULT_USER_ID } from '../../../constants';
 import { IdeaCreateDTO } from '../dto/idea-create.dto';
+import { UserService } from 'src/modules/user/services/user.service';
 
 @Injectable()
 export class IdeasService {
   constructor(
     @Inject('IdeasDBService') protected dbService: IdeasDBServiceInterface,
-    @Inject(UserAuthService) protected userAuthService: UserAuthService,
+    @Inject('UserService') protected userService: UserService,
   ) {}
 
   async create(item: IdeaCreateDTO, userId: string = DEFAULT_USER_ID) {
@@ -20,7 +20,7 @@ export class IdeasService {
   }
 
   async getResponseFromIdeas(ideas: IdeaInterface[]) {
-    const users = (await this.userAuthService.getUsersInfo(
+    const users = (await this.userService.getUsersInfo(
       this.getUserIdsFromIdeas(ideas),
     )).reduce(
       (total, user) => {

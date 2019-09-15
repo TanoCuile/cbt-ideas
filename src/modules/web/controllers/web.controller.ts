@@ -1,7 +1,8 @@
-import { Controller, Get, Param, Inject } from '@nestjs/common';
+import { Controller, Get, Param, Inject, UseGuards } from '@nestjs/common';
 import { resolve } from 'path';
 import * as ejs from 'ejs';
 import { WebService } from '../services/web.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller()
 export class WebController {
@@ -17,6 +18,7 @@ export class WebController {
     );
   }
 
+  @UseGuards(AuthGuard('token'))
   @Get('/ideas*')
   async getIdeas() {
     return this.getIndex();

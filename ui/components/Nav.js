@@ -43,6 +43,9 @@ const Nav = () => {
           <Link to="/">All Ideas</Link>
         </NavItem>
         <NavItem>
+          <a href="/auth/example">Log in through TMP</a>
+        </NavItem>
+        <NavItem>
           <Link to="/ideas/create">Create New Idea</Link>
         </NavItem>
       </NavInner>
