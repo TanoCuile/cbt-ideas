@@ -45,7 +45,7 @@ export class UserAuthService {
     return !!user;
   }
 
-  private async getUserByToken(userToken: string) {
+  async getUserByToken(userToken: string) {
     const users = await this.userDbService.getByCriteria({ token: userToken });
     return users[0];
   }

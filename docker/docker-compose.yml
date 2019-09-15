@@ -42,6 +42,7 @@ services:
       - '../ui:/srv/app/ui'
       - '../test:/srv/app/test'
       - '../static:/srv/app/static'
+      - '../node_modules:/srv/app/node_modules'
       - '../package.json:/srv/app/package.json'
     env_file:
      - ../.env

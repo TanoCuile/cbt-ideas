@@ -1,15 +1,17 @@
 import { Module } from '@nestjs/common';
-import { WebController } from './modules/web/controllers/web.controller';
 import { UserModule } from './modules/user/user.module';
 import { IdeasModule } from './modules/ideas/ideas.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { DbModule } from './modules/db/db.module';
-import { WebService } from './modules/web/services/web.service';
 import { FixturesModule } from './modules/fixtures/fixtures.module';
 import { NotificationModule } from './modules/notifications/notification.module';
+import { PassportModule } from '@nestjs/passport';
+import { WebModule } from './modules/web/web.module';
 
 @Module({
   imports: [
+    WebModule,
+    PassportModule.register({ defaultStrategy: 'token' }),
     UserModule,
     IdeasModule,
     CommentsModule,
@@ -17,7 +19,7 @@ import { NotificationModule } from './modules/notifications/notification.module'
     FixturesModule,
     NotificationModule,
   ],
-  controllers: [WebController],
-  providers: [WebService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

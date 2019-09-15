@@ -1,10 +1,10 @@
 import { Controller, Get, Inject, Req, UseGuards } from '@nestjs/common';
 import { UserAuthService } from '../services/user.auth.service';
 import { Request } from 'express';
-import { AuthGuard } from '../../../guards/auth.guard';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('/api/user')
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard('token'))
 export class UserController {
   constructor(
     @Inject(UserAuthService) protected readonly authService: UserAuthService,

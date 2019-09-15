@@ -10,17 +10,16 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiResponse } from '@nestjs/swagger';
+import { Request } from 'express';
 
 import { IdeasService } from '../services/ideas.service';
-import { AuthGuard } from '../../../guards/auth.guard';
 import { UserAuthService } from '../../user/services/user.auth.service';
-import { Request } from 'express';
-import { IdeaInterface } from '../interfaces/idea.interface';
 import { IdeaCreateDTO } from '../dto/idea-create.dto';
 import { IdeaResponseDTO } from '../dto/idea-response.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('api/ideas')
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard('token'))
 export class IdeasController {
   constructor(
     @Inject(IdeasService) protected readonly ideasService: IdeasService,
@@ -42,7 +41,7 @@ export class IdeasController {
 
   @Get()
   @ApiResponse({ status: 200, type: IdeaResponseDTO, isArray: true })
-  async getAll() {
+  async getAll(@Req() req: Request) {
     return await this.ideasService.getResponseFromIdeas(
       await this.ideasService.getAll(),
     );

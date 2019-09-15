@@ -19,42 +19,17 @@ async function bootstrap() {
   });
   app.enableCors({ credentials: true, origin: true });
 
-  passport.use(
-    'oauth2',
-    new OAuth2Strategy(
-      {
-        authorizationURL: 'http://0.0.0.0:3100/dialog/authorize',
-        tokenURL: 'http://0.0.0.0:3100/oauth/token',
-        clientID: 'abc123',
-        clientSecret: 'ssh-secret',
-        callbackURL: 'http://0.0.0.0:3006/auth/ideas_forum/callback',
-      },
-      function(accessToken, refreshToken, profile, cb) {
-        console.log('---------', arguments);
-        return cb(null, {
-          id: '1',
-        });
-      },
-    ),
-  );
-  app.use(passport.initialize());
+  // app.use(passport.initialize());
   // app.use(passport.session());
-  app.getHttpAdapter().get('/auth', passport.authenticate('oauth2'));
+  // passport.serializeUser(function(user, done) {
+  //   console.log('Serialize', user);
+  //   done(null, user);
+  // });
 
-  (app.getHttpAdapter() as any).get(
-    '/auth/ideas_forum/callback',
-    passport.authenticate('oauth2', {
-      successRedirect: '/',
-      failureRedirect: '/login',
-    }),
-  );
-  passport.serializeUser(function(user, done) {
-    done(null, user);
-  });
-
-  passport.deserializeUser(function(user, done) {
-    done(null, user);
-  });
+  // passport.deserializeUser(function(user, done) {
+  //   console.log('Deserialize', user);
+  //   done(null, user);
+  // });
 
   const options = new DocumentBuilder()
     .setTitle(API_TITLE)

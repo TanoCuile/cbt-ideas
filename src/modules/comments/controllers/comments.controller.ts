@@ -6,6 +6,7 @@ import {
   Param,
   Inject,
   Req,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiResponse } from '@nestjs/swagger';
 import { CommentsService } from '../services/comments.service';
@@ -14,8 +15,10 @@ import { UserAuthService } from '../../user/services/user.auth.service';
 import { Request } from 'express';
 import { CommentResponseDTO } from '../dtos/comment-response.dto';
 import { CommentCreateDTO } from '../dtos/comment-create.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('api/comments')
+@UseGuards(AuthGuard('token'))
 export class CommentsController {
   constructor(
     @Inject(CommentsService)
@@ -35,7 +38,9 @@ export class CommentsController {
       comment.userId = user.id;
       const storedComment = await this.commentsService.create(ideaId, comment);
 
-      const commentResponse = await this.commentsService.getResponseFromComments([storedComment]);
+      const commentResponse = await this.commentsService.getResponseFromComments(
+        [storedComment],
+      );
 
       return commentResponse[0];
     }
@@ -44,6 +49,8 @@ export class CommentsController {
   @Get('/:ideaId')
   @ApiResponse({ status: 200, type: CommentResponseDTO, isArray: true })
   async getByPost(@Param() { ideaId }: { ideaId: string }) {
-    return this.commentsService.getResponseFromComments(await this.commentsService.getByIdea(ideaId));
+    return this.commentsService.getResponseFromComments(
+      await this.commentsService.getByIdea(ideaId),
+    );
   }
 }
